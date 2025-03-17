@@ -9,9 +9,38 @@
         <link rel="stylesheet" href="stylesheet.css">
     </head>
     <body>
-     <div class="main">
+     <div id="main">
         <div id="top">
-            
+
+        </div>
+        <div id="content">            
+                <table id="names-points">
+                    <tr id="names">
+                        <td>
+                            <h2 id="pa-name" onclick="changeNames(this)">Player A</h2>
+                        </td>
+                        <td>
+                            <h2 id="pb-name" onclick="changeNames(this)">Player B</h2>
+                        </td>
+                    </tr>
+                    <tr id="points">
+                        <td id="pa-points">0</td>
+                        <td id="pb-points">0</td>
+                    </tr>                    
+                </table>                
+                <table id="plus-minus-btns">
+                    <tr id="pm-btns">
+                        <td id="pa-plus" onclick="add(this)">+</td>
+                        <td id="pa-minus" onclick="substract(this)">-</td>
+                        <td id="pb-plus" onclick="add(this)">+</td>
+                        <td id="pb-minus" onclick="substract(this)">-</td>
+                    </tr>
+                </table>
+                <div id="timer">03:00</div>
+                <div id="pass-timer">Passivity</div>
+            </div>
+            <div></div>
+
         </div>
 
      </div>

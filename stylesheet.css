@@ -1,0 +1,15 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+#content{
+    margin: 10px;
+}
+
+#names-points, #plus-minus-btns, #timer, #pass-timer{
+    border: 1px solid red;
+    width: 100%;    
+}
+#names, #points, #pm-btns, #timer, #pass-timer{
+    text-align: center;
+}
