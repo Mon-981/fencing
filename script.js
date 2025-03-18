@@ -3,16 +3,21 @@ function changeNames(element){
     let newName = prompt('Your name');
     let regex = /^[a-zA-Z]+$/
     const id = element.id;
-    if (regex.test(newName)){
+    if (newName!= null && regex.test(newName)){
         document.getElementById(id).textContent = newName;
     }else{
         alert('Name field can only contain letters');
-        document.getElementById(id).textContent = 'Player A';
+        let id = element.id;
+        if(id === 'pa-name'){
+            document.getElementById(id).textContent = 'Player A';
+        }else{
+            document.getElementById(id).textContent = 'Player B';
+        }
     }
 }
 
-function add(point){
-    const id = point.id;     
+function add(btn){
+    const id = btn.id;     
     if (id === 'pa-plus'){
         let A_SCORE = document.getElementById('pa-points');
         A_SCORE.textContent++ ;         
@@ -22,8 +27,15 @@ function add(point){
     }
 }
 
-function substract(point){
-    const id = point.id;
+document.querySelectorAll('.p-names').forEach(player => {
+    player.addEventListener('click', function(){
+        changeNames(this);
+    })
+    
+});
+
+function decrease(btn){
+    const id = btn.id;
     if(id === 'pa-minus'){
         let A_SCORE = document.getElementById('pa-points');        
         A_SCORE.textContent <= 0 ? A_SCORE = 0 : A_SCORE.textContent--;
@@ -32,3 +44,19 @@ function substract(point){
         B_SCORE.textContent <= 0 ? B_SCORE = 0 : B_SCORE.textContent--;
     }
 }
+
+
+//Selecciona todos los elementos de la clase add-btns y le añade el addEventListener 
+// con la funcion add, pasándole la información del botón que la ejecutó
+document.querySelectorAll('.add-btns').forEach(button => {
+    button.addEventListener('click',function(){
+        add(this);
+    })    
+})
+
+document.querySelectorAll('.decrease-btns').forEach(button =>{
+    button.addEventListener('click', function(){
+        decrease(this);
+    })
+})
+
