@@ -6,10 +6,10 @@
     margin: 10px;
 }
 
-#names-points, #plus-minus-btns, #timer, #pass-timer{
+#names-points, #plus-minus-btns, #timer, #pass-timer, #start-stop-button{
     border: 1px solid red;
     width: 100%;    
 }
-#names, #points, #pm-btns, #timer, #pass-timer{
+#names, #points, #pm-btns, #timer, #pass-timer, #start-stop-button{
     text-align: center;
 }
