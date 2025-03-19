@@ -1,51 +1,66 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta charset='utf-8'>
+        <meta http-equiv='X-UA-Compatible' content='IE=edge'>
         <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="stylesheet.css">
+        <meta name='description' content='>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <link rel='stylesheet' href='stylesheet.css'>
     </head>
     <body>
-     <div id="main">
-        <div id="top">
-
-        </div>
-        <div id="content">            
-                <table id="names-points">
-                    <tr id="names">
+        <div class= 'cards' id='yellow-card'></div>
+        <div class= 'cards' id='red-card'></div>
+        <div class= 'cards' id='black-card'></div>            
+        <div id='main'>
+            <div id='top'>    </div>
+            <div id='content'>
+                <table id='names-points'>
+                    <tr id='names'>
                         <td>
-                            <h2 class='p-names' id="pa-name">Player A</h2>
+                            <h2 class='p-names' id='pa-name'>Player A</h2>
                         </td>
                         <td>
-                            <h2 class='p-names' id="pb-name">Player B</h2>
+                            <h2 class='p-names' id='pb-name'>Player B</h2>
                         </td>
                     </tr>
-                    <tr id="points">
-                        <td id="pa-points">0</td>
-                        <td id="pb-points">0</td>
-                    </tr>                    
-                </table>                
-                <table id="plus-minus-btns">
-                    <tr id="pm-btns">
-                        <td class='add-btns'id='pa-plus'>+</td>
+                    <tr id='cards-tr'>
+                        <td class='cards-td'>
+                            <div class='yellow-cards' id='yellow-card-a'></div>
+                            <div class='red-cards' id='red-card-a'></div>
+                            <div class='black-cards' id='black-card-a'></div>
+                            <div class='priority-cards' id='priority-a'>P</div>
+                        </td>
+                        <td class='cards-td'> 
+                            <div class='yellow-cards' id='yellow-card-b'></div>
+                            <div class='red-cards' id='red-card-b'></div>
+                            <div class='black-cards' id='black-card-b'></div>
+                            <div class='priority-cards' id='priority-b'>P</div>
+                        </td>                      
+                    </tr>
+                    <tr id='points'>
+                        <td id='pa-points'>0</td>
+                        <td id='pb-points'>0</td>
+                    </tr>
+                </table>
+                <table id='plus-minus-btns'>
+                    <tr id='pm-btns'>
+                        <td class='add-btns' id='pa-plus'>+</td>
                         <td class='decrease-btns' id='pa-minus'>-</td>
                         <td class='add-btns' id='pb-plus'>+</td>
                         <td class='decrease-btns' id='pb-minus'>-</td>
                     </tr>
                 </table>
-                <div id="timer">03:00:00</div>
-                <div id="pass-timer">Passivity</div>
-                <div id="start-stop-button">START</div>
+                <div id='timer'>03 : 00</div>
+                <div id='pass-timer'>01 : 00 : 000</div>
+                <div id='start-stop-button'>START</div>
+                <div id='reset-priority-table'>                    
+                    <div id='reset-btn'>RESET</div>                        
+                    <div id='priority-btn'>PRIORITY</div>                       
+                </div>
             </div>
-            <div></div>
-
         </div>
-
-     </div>
         
-        <script src="script.js" async defer></script>
+        <script src='script.js' async defer></script>
     </body>
 </html>

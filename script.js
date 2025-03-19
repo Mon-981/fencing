@@ -17,19 +17,7 @@ function changeNames(element){
         id === 'pa-name' ? document.getElementById(id).textContent = 'Player A' : document.getElementById(id).textContent = 'Player B';        
     }
 }
-/*
- Función para sumar puntos
- */
-function add(btn){
-    const id = btn.id;     
-    if (id === 'pa-plus'){
-        let A_SCORE = document.getElementById('pa-points');
-        A_SCORE.textContent++ ;         
-    } else{
-        let B_SCORE = document.getElementById('pb-points');
-        B_SCORE.textContent++ ;    
-    }
-}
+
 /*
 Selecciona los dos elementos de la clase p-names (nombres de los jugadores) 
 y les aplica el event listener click para llamar a la función changeNames
@@ -40,6 +28,20 @@ document.querySelectorAll('.p-names').forEach(player => {
     })
     
 })
+
+/*
+ Función para sumar puntos
+ */
+let A_SCORE = document.getElementById('pa-points');
+let B_SCORE = document.getElementById('pb-points');
+function add(btn){
+    const id = btn.id;     
+    if (id === 'pa-plus'){
+        A_SCORE.textContent++ ;         
+    } else{
+        B_SCORE.textContent++ ;    
+    }
+}
 
 /*
 Función para restar puntos
@@ -73,33 +75,6 @@ document.querySelectorAll('.decrease-btns').forEach(button =>{
     })
 })
 
-// let totalTime = 3*60*100;
-// let running = false;
-// let countdownInterval;
-// function startCountdown (){
-//     if (totalTime<=0){
-//         clearInterval(countdownInterval);
-//         running = false;
-//         alert('Time is up');
-//         return;
-//     }
-//     running = true;
-//     totalTime--;
-//     let minutes = Math.floor(totalTime/6000);
-//     let seconds = (Math.floor(totalTime/100))%60;
-//     let milliseconds = totalTime%100;
-//     document.getElementById('pass-timer').textContent = 
-//         `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}:${milliseconds.toString().padStart(2, '0')}`;
-// }
-// function startStop(){
-//     if(running === false){
-//         countdownInterval = setInterval(startCountdown, 10);
-//     }else{
-//         clearInterval(countdownInterval);
-//         running = false;
-//     }
-// }
-
 /*
 Para crear el cronómetro emplearemos requestAnimationFrame por ser un método más preciso que setInterval
 Marcamos como duración por defecto para los asaltos 3 minutos
@@ -109,6 +84,20 @@ let totalMinutes = 3
 let totalTime = totalMinutes*(60 * 1000); 
 let running = false;
 let lastTime;
+let passivityTime = 0.1*60*1000;
+let passivityLastTime;
+
+/**
+ * Cambia los valores del texto del botón START cada vez que se pulsa
+ */
+function toggleStartStopButton(){
+    let button = document.getElementById('start-stop-button');
+    if (!running){
+        button.textContent = "START";
+    } else{
+        button.textContent = "STOP";
+    }
+}
 
 /**
 La función step calcula el tiempo que pasa entre cada ciclo de requestAnimationFrame
@@ -126,13 +115,33 @@ function step(currentTime) {
     const DELTA_TIME = currentTime - lastTime; 
     lastTime = currentTime;
     totalTime -= DELTA_TIME; 
+
+    if (!passivityLastTime) passivityLastTime = currentTime;
+    const passivityDeltaTime = currentTime - passivityLastTime;
+    passivityLastTime = currentTime;
+    passivityTime -= passivityDeltaTime;
+
     if (totalTime <= 0) {
         totalTime = 0;
         running = false;
+        toggleStartStopButton();
         alert("Time is up!");
         return;
     }
+    
+    
+    if (passivityTime <= 0) {        
+        passivityTime = 0;
+        running = false;
+        toggleStartStopButton();
+        passivityTime = 0.1*60*1000;        
+        alert('Penalty for passivity for both players');
+        changePassivityStatus('playerA', 'playerB')
+        totalTime += 10
+    }
+    
     updateTimer();
+    updatePassivityTimer();
     requestAnimationFrame(step);
 }
 /*
@@ -141,16 +150,16 @@ Obtiene el tiempo transcurrido con una precisión de una fracción de milisegund
 Si el cronómetro no está corriendo lo inicia y cambia el texto del botón a stop
 Si el cronómetro ya  está corriendo lo para y restaura el valor del botón a start
 */
-function startStop() {
-    let button = document.getElementById('start-stop-button');
+function startStop() {    
     if (!running) {
         running = true;
+        toggleStartStopButton();
         lastTime = performance.now();
-        requestAnimationFrame(step);
-        button.textContent = "STOP";
+        passivityLastTime = performance.now();
+        requestAnimationFrame(step);       
     } else {
         running = false;
-        button.textContent = "START";
+        toggleStartStopButton();
     }
 }
 
@@ -160,13 +169,108 @@ function startStop() {
  */
 function updateTimer() {
     const minutes = Math.floor(totalTime / 60000);
-    const seconds = Math.floor((totalTime % 60000) / 1000);
-    const milliseconds = Math.floor(totalTime % 1000);
-    
+    const seconds = Math.floor((totalTime / 1000)%60);
+    const milliseconds = Math.floor((totalTime % 1000)/10);    
     document.getElementById('timer').textContent = 
-        `${minutes.toString().padStart(2, '0')}:
-         ${seconds.toString().padStart(2, '0')}:
-         ${milliseconds.toString().padStart(3, '0')}`;
+        `${minutes.toString().padStart(2, '0')} : 
+         ${seconds.toString().padStart(2, '0')}`;
 }
 
 document.getElementById('start-stop-button').addEventListener('click', startStop);
+
+function updatePassivityTimer() {
+    const minutes = Math.floor(passivityTime / 60000);
+    const seconds = Math.floor((passivityTime / 1000)%60);
+    const milliseconds = Math.floor(passivityTime % 1000);
+    
+    document.getElementById('pass-timer').textContent = 
+        `${minutes.toString().padStart(2, '0')} : 
+         ${seconds.toString().padStart(2, '0')} : 
+         ${milliseconds.toString().padStart(3, '0')}`;
+}
+
+function reset(){
+    totalTime = totalMinutes*(60 * 1000);
+    passivityTime = 1*60*1000;
+    updateTimer()
+    updatePassivityTimer();
+}
+
+document.getElementById('reset-btn').addEventListener('click', reset);
+
+let passivityStatusA = 0;
+let passivityStatusB = 0;
+
+if(passivityStatusA === 3){
+    alert('Game Over');
+    reset();
+}
+function changePassivityStatus(...args){
+    for(let id of args){
+        if (id === 'playerA'){
+            passivityStatusA++;            
+            setPassivityCards('playerA');
+            if (passivityStatusA === 2){ 
+                B_SCORE.textContent++;
+            } else if(passivityStatusA === 3){
+                alert('Jugador A descalificado');
+                
+            }    
+        }else if (id === 'playerB') {
+            passivityStatusB++;
+            setPassivityCards('playerB');
+            if (passivityStatusB === 2){ 
+                A_SCORE.textContent++;
+            } else if(passivityStatusA === 3){
+                alert('Jugador B descalificado');                
+            }  
+        } else {
+            console.log('Jugador no reconocido');
+        }
+    }
+}
+function setPassivityCards(id){
+    let key= '';
+    let player = '';
+    if (id === 'playerA'){
+        key = passivityStatusA;
+        player = 'a';
+    }else if (id === 'playerB') {
+        key = passivityStatusB;
+        player = 'b';       
+    } else {
+        console.log('Jugador no reconocido');
+    }
+    switch (key) {
+        case 1:
+            document.getElementById('yellow-card-' + player).style.display = 'flex';
+            document.getElementById('yellow-card').style.display = 'flex';
+            document.getElementById('yellow-card').addEventListener('click', function(){
+                toggleDisplay(this);
+            });
+            break;
+        case 2:
+            document.getElementById('red-card-' + player).style.display = 'flex';
+            document.getElementById('red-card').style.display = 'flex';
+            document.getElementById('red-card').addEventListener('click', function(){
+                toggleDisplay(this);
+            });            
+            break;    
+        case 3:
+            document.getElementById('black-card-' + player).style.display = 'flex';
+            document.getElementById('black-card').style.display = 'flex';
+            document.getElementById('black-card').addEventListener('click', function(){
+                toggleDisplay(this);
+            });
+            reset();            
+            break; 
+        default:
+            
+            break;
+    }
+}
+
+function toggleDisplay(element){
+    id = element.id;
+    document.getElementById(id).style.display = 'none';
+}

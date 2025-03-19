@@ -6,10 +6,110 @@
     margin: 10px;
 }
 
-#names-points, #plus-minus-btns, #timer, #pass-timer, #start-stop-button{
+#names-points, #plus-minus-btns, #timer, #pass-timer, #start-stop-button, #reset-priority-table, #cards-tr{
     border: 1px solid red;
     width: 100%;    
 }
 #names, #points, #pm-btns, #timer, #pass-timer, #start-stop-button{
     text-align: center;
+}
+
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+#content {
+    margin: 10px;
+}
+
+#names-points {
+    border: 1px solid red;
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+}
+
+#names, #points {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    text-align: center;
+}
+
+#cards-tr {
+    width: 100%;
+    height: 15px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.cards-td {
+    display: flex;
+    justify-content: center;
+    gap: 25px; 
+}
+
+.cards-td div {
+    width: 12px; 
+    height: 12px;
+    border-radius: 50px;
+    display: none;    
+    align-items: center;
+    justify-content: center;    
+    font-size: 0.6rem;   
+}
+.yellow-cards{
+    background-color: yellow;    
+}
+.red-cards{    
+    background-color: red;
+}
+.black-cards{
+    background-color: black;
+}
+.priority-cards{
+    background-color: blue;
+    color: white;
+    font-weight: bold;
+}
+#reset-priority-table{
+    display: flex;
+    justify-content: center;
+}
+#reset-btn{
+    width: 100%;
+    display: block;
+    border: 1px solid red;
+    text-align: center;
+}
+#priority-btn{
+    width: 100%;
+    display: block;
+    border: 1px solid red;
+    margin: auto;
+    text-align: center;
+}
+.cards{
+    /* display: none; */
+    height: auto;
+    border: 1px solid red;
+    
+}
+
+#yellow-card{    
+    background-color: yellow;
+    height: 100vh;
+    display: none;   
+}
+#red-card{    
+    background-color: red;
+    height: 100vh;
+    display: none;   
+}
+#black-card{    
+    background-color: black;
+    height: 100vh;
+    display: none;   
 }
