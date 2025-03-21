@@ -1,4 +1,52 @@
+let totalMinutes = 3;
+let totalTime; 
+let running = false;
+let lastTime;
+let passivityTime = 0.1*60*1000;
+let passivityLastTime;
+let passivityStatusA = 0;
+let passivityStatusB = 0;
+let issetPriority = false;
+let priorityA = false;
+let priorityB = false;
+let timer = document.getElementById('timer');
+let passTimer = document.getElementById('pass-timer');
+let priorityACheck = document.getElementById('priority-a');
+let priorityBCheck = document.getElementById('priority-b');
+document.getElementById('start-stop-button').addEventListener('click', startStop);
+document.getElementById('reset-btn').addEventListener('click', reset);
+document.getElementById('priority-btn').addEventListener('click', function(){
+    checkPriority();
+    setPriority();
+});
+/*
+Selecciona todos los elementos de la clase add-btns y le añade el addEventListener 
+con la funcion add, pasándole la información del botón que la ejecutó
+*/ 
+document.querySelectorAll('.add-btns').forEach(button => {
+    button.addEventListener('click',function(){
+        add(this);
+    })    
+})
 
+document.querySelectorAll('.decrease-btns').forEach(button =>{
+    button.addEventListener('click', function(){
+        decrease(this);
+    })
+})
+/*
+Selecciona los dos elementos de la clase p-names (nombres de los jugadores) 
+y les aplica el event listener click para llamar a la función changeNames
+*/
+document.querySelectorAll('.p-names').forEach(player => {
+    player.addEventListener('click', function(){
+        changeNames(this);
+    })
+    
+})
+updateTotalMinutes();
+updateTimer();
+updatePassivityTimer();
 /*
 Función para cambiar los nombres de los participantes
 Se solicita un nuevo nombre, debe contener al menos una letra, y no ser nulo
@@ -18,16 +66,6 @@ function changeNames(element){
     }
 }
 
-/*
-Selecciona los dos elementos de la clase p-names (nombres de los jugadores) 
-y les aplica el event listener click para llamar a la función changeNames
-*/
-document.querySelectorAll('.p-names').forEach(player => {
-    player.addEventListener('click', function(){
-        changeNames(this);
-    })
-    
-})
 
 /*
  Función para sumar puntos
@@ -59,33 +97,12 @@ function decrease(btn){
 }
 
 
-/*
-Selecciona todos los elementos de la clase add-btns y le añade el addEventListener 
-con la funcion add, pasándole la información del botón que la ejecutó
-*/ 
-document.querySelectorAll('.add-btns').forEach(button => {
-    button.addEventListener('click',function(){
-        add(this);
-    })    
-})
-
-document.querySelectorAll('.decrease-btns').forEach(button =>{
-    button.addEventListener('click', function(){
-        decrease(this);
-    })
-})
 
 /*
 Para crear el cronómetro emplearemos requestAnimationFrame por ser un método más preciso que setInterval
 Marcamos como duración por defecto para los asaltos 3 minutos
 Calculamos el total de milisegundos
 */
-let totalMinutes = 3
-let totalTime = totalMinutes*(60 * 1000); 
-let running = false;
-let lastTime;
-let passivityTime = 0.1*60*1000;
-let passivityLastTime;
 
 /**
  * Cambia los valores del texto del botón START cada vez que se pulsa
@@ -110,6 +127,9 @@ Una tasa demasiado elevada para un cronómetro de precisión, por ello se calcul
  en ese momento la función deja de ejecutarse
 */
 function step(currentTime) {
+    if(!totalMinutes){
+        updateTotalMinutes();
+    }
     if (!running) return;
     if (!lastTime) lastTime = currentTime;
     const DELTA_TIME = currentTime - lastTime; 
@@ -150,8 +170,8 @@ Obtiene el tiempo transcurrido con una precisión de una fracción de milisegund
 Si el cronómetro no está corriendo lo inicia y cambia el texto del botón a stop
 Si el cronómetro ya  está corriendo lo para y restaura el valor del botón a start
 */
-function startStop() {    
-    if (!running) {
+function startStop() { 
+    if (!running) {        
         running = true;
         toggleStartStopButton();
         lastTime = performance.now();
@@ -170,41 +190,35 @@ function startStop() {
 function updateTimer() {
     const minutes = Math.floor(totalTime / 60000);
     const seconds = Math.floor((totalTime / 1000)%60);
-    const milliseconds = Math.floor((totalTime % 1000)/10);    
+      
     document.getElementById('timer').textContent = 
         `${minutes.toString().padStart(2, '0')} : 
-         ${seconds.toString().padStart(2, '0')}`;
+         ${seconds.toString().padStart(2, '0')}`;         
 }
 
-document.getElementById('start-stop-button').addEventListener('click', startStop);
 
 function updatePassivityTimer() {
-    const minutes = Math.floor(passivityTime / 60000);
-    const seconds = Math.floor((passivityTime / 1000)%60);
-    const milliseconds = Math.floor(passivityTime % 1000);
+    const pMinutes = Math.floor(passivityTime / 60000);
+    const pSeconds = Math.floor((passivityTime / 1000)%60);
+    const pMilliseconds = Math.floor(passivityTime % 1000);
     
     document.getElementById('pass-timer').textContent = 
-        `${minutes.toString().padStart(2, '0')} : 
-         ${seconds.toString().padStart(2, '0')} : 
-         ${milliseconds.toString().padStart(3, '0')}`;
+        `${pMinutes.toString().padStart(2, '0')} : 
+         ${pSeconds.toString().padStart(2, '0')} : 
+         ${pMilliseconds.toString().padStart(3, '0')}`;
 }
 
 function reset(){
+    totalMinutes = 3;
     totalTime = totalMinutes*(60 * 1000);
-    passivityTime = 1*60*1000;
-    updateTimer()
+    passivityTime = 1*60*1000;    
+    resetCards();
+    updateTimer();
     updatePassivityTimer();
 }
 
-document.getElementById('reset-btn').addEventListener('click', reset);
 
-let passivityStatusA = 0;
-let passivityStatusB = 0;
 
-if(passivityStatusA === 3){
-    alert('Game Over');
-    reset();
-}
 function changePassivityStatus(...args){
     for(let id of args){
         if (id === 'playerA'){
@@ -221,7 +235,7 @@ function changePassivityStatus(...args){
             setPassivityCards('playerB');
             if (passivityStatusB === 2){ 
                 A_SCORE.textContent++;
-            } else if(passivityStatusA === 3){
+            } else if(passivityStatusB === 3){
                 alert('Jugador B descalificado');                
             }  
         } else {
@@ -229,6 +243,9 @@ function changePassivityStatus(...args){
         }
     }
 }
+
+//REFACTORIZAR
+
 function setPassivityCards(id){
     let key= '';
     let player = '';
@@ -243,21 +260,21 @@ function setPassivityCards(id){
     }
     switch (key) {
         case 1:
-            document.getElementById('yellow-card-' + player).style.display = 'flex';
+            document.getElementById('yellow-pcard-' + player).style.display = 'flex';            
             document.getElementById('yellow-card').style.display = 'flex';
             document.getElementById('yellow-card').addEventListener('click', function(){
                 toggleDisplay(this);
             });
             break;
         case 2:
-            document.getElementById('red-card-' + player).style.display = 'flex';
+            document.getElementById('red-pcard-' + player).style.display = 'flex';
             document.getElementById('red-card').style.display = 'flex';
             document.getElementById('red-card').addEventListener('click', function(){
                 toggleDisplay(this);
             });            
             break;    
         case 3:
-            document.getElementById('black-card-' + player).style.display = 'flex';
+            document.getElementById('black-pcard-' + player).style.display = 'flex';
             document.getElementById('black-card').style.display = 'flex';
             document.getElementById('black-card').addEventListener('click', function(){
                 toggleDisplay(this);
@@ -273,4 +290,57 @@ function setPassivityCards(id){
 function toggleDisplay(element){
     id = element.id;
     document.getElementById(id).style.display = 'none';
+}
+
+function setPriority(){
+    let priority = Math.floor(Math.random()*2);
+    if(priority === 0){
+        priorityA = true;
+        issetPriority = true;
+        updateTotalMinutes();
+        updateTimer();
+        priorityACheck.style.display= 'flex';              
+    } else if (priority === 1) {
+        priorityB = true;
+        issetPriority = true;
+        updateTotalMinutes();
+        updateTimer();
+        priorityBCheck.style.display= 'flex';        
+    } 
+}
+
+
+function checkPriority(){
+    if (issetPriority){
+        priorityA = false;
+        priorityB = false;
+        issetPriority = false;  
+        priorityACheck.style.display= 'none';
+        priorityBCheck.style.display= 'none';       
+    } else{
+        setPriority();      
+    }
+}
+
+function updateTotalMinutes(){
+    if (issetPriority){
+        totalMinutes = 1;
+        totalTime = totalMinutes*(60 * 1000);  
+    } else{
+        totalMinutes = 3;
+        totalTime = totalMinutes*(60 * 1000); 
+    }  
+}
+
+
+
+function resetCards(){
+    document.querySelectorAll('.cards').forEach(card =>{
+       card.style.display='none';
+    });
+    issetPriority = false;
+    priorityA = false;
+    priorityB = false;
+    passivityStatusA = 0;
+    passivityStatusB = 0;
 }

@@ -61,7 +61,7 @@
     font-size: 0.6rem;   
 }
 .yellow-cards{
-    background-color: yellow;    
+    background-color: yellow;      
 }
 .red-cards{    
     background-color: red;
@@ -101,7 +101,7 @@
 #yellow-card{    
     background-color: yellow;
     height: 100vh;
-    display: none;   
+    display: none;     
 }
 #red-card{    
     background-color: red;
@@ -113,3 +113,4 @@
     height: 100vh;
     display: none;   
 }
+
