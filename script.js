@@ -77,11 +77,23 @@ function changeNames(element){
  Función para sumar puntos
  */
 function add(btn){
-    const id = btn.id;     
-    if (id === 'pa-plus'){
-        A_SCORE.textContent++ ;         
-    } else{
-        B_SCORE.textContent++ ;    
+    const id = btn.id;
+    if(issetPriority){
+        running = false;
+        toggleStartStopButton();
+        if (id === 'pa-plus'){
+            A_SCORE.textContent++;
+            alert('Player A Wins');         
+        } else{
+            B_SCORE.textContent++ ;
+            alert('Player B Wins');    
+        }
+    } else {
+        if (id === 'pa-plus'){
+            A_SCORE.textContent++ ;         
+        } else{
+            B_SCORE.textContent++ ;    
+        }
     }
 }
 
@@ -178,10 +190,12 @@ function startStop() {
         toggleStartStopButton();
         lastTime = performance.now();
         passivityLastTime = performance.now();
-        requestAnimationFrame(step);       
+        requestAnimationFrame(step); 
+        document.getElementById('to-hide').style.display = 'none';      
     } else {
         running = false;
         toggleStartStopButton();
+        document.getElementById('to-hide').style.display = 'unset';
     }
 }
 
@@ -216,6 +230,7 @@ function reset(){
     passivityTime = 1*60*1000;    
     updateTimer();
     updatePassivityTimer();
+    enableClicks('start-stop-button', 'priority-btn');
 }
 
 
@@ -388,7 +403,17 @@ function setCards(element){
         document.getElementById('black-card').style.display = 'flex';
         document.getElementById('black-card').addEventListener('click', function(){
             toggleDisplay(this);
-        });            
+        });
+        if (element.classList.contains('a-cards')){
+            document.getElementById('black-pcard-a').style.display = 'flex';
+            alert('Player A disqualified, Player B wins') 
+         } else if (element.classList.contains('b-cards')){
+             document.getElementById('black-pcard-b').style.display = 'flex';
+             alert('Player B disqualified, Player A wins');
+             disableClicks('start-stop-button', 'priority-btn');
+         } else {
+             return;
+         }                        
     } else{
         return;
     }     
@@ -399,21 +424,46 @@ function penaltiesToPoints(player){
             if (aPenalties === 2){
                 B_SCORE.textContent++;
                 aPenalties = 0;
+                document.querySelectorAll('#yellow-card-a, #red-card-a').forEach(card =>{
+                    card.style.display = 'none';
+                });
             } else if (aPenalties === 3){
                 B_SCORE.textContent++;
                 aPenalties = 1;
+                document.querySelectorAll('#red-card-a').forEach(card =>{
+                    card.style.display = 'none';
+                });
             }
             break;
         case 'playerB':
             if (bPenalties === 2){
                 A_SCORE.textContent++;
                 bPenalties = 0;
+                document.querySelectorAll('#yellow-card-b, #red-card-b').forEach(card =>{
+                    card.style.display = 'none';
+                });
             } else if (bPenalties === 3){
                 A_SCORE.textContent++;
                 bPenalties = 1;
+                document.querySelectorAll('#red-card-b').forEach(card =>{
+                    card.style.display = 'none';
+                });
             }
             break;
         default:
             return;
     }
+}
+function disableClicks(...args){
+    args.forEach(arg =>{
+        document.getElementById(arg).style.pointerEvents = 'none';
+        document.getElementById(arg).style.color = 'grey';
+    })
+}
+
+function enableClicks(...args){
+    args.forEach(arg =>{
+        document.getElementById(arg).style.pointerEvents = 'auto';
+        document.getElementById(arg).style.color = 'black'; 
+    })
 }
