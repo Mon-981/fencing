@@ -52,8 +52,8 @@
 }
 
 .cards-td div {
-    width: 4vw; 
-    height: 4vw;
+    width: 2.5vh; 
+    height: 2.5vh;
     border-radius: 50px;
     display: none;    
     align-items: center;
