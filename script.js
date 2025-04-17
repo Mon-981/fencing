@@ -165,7 +165,10 @@ function step(currentTime) {
     if (!passivityLastTime) passivityLastTime = currentTime;
     const passivityDeltaTime = currentTime - passivityLastTime;
     passivityLastTime = currentTime;
-    passivityTime -= passivityDeltaTime;
+    passivityTime -= passivityDeltaTime;    
+    if (totalTime < 1*60*1000)        timer.style.color = "orange";
+    if (totalTime < 0.5*60*1000)      timer.style.color = "#cd2200";
+    
 
     if (totalTime <= 0) {
         totalTime = 0;
@@ -173,8 +176,7 @@ function step(currentTime) {
         toggleStartStopButton();
         alert("Time is up!");
         return;
-    }
-    
+    }    
     
     if (passivityTime <= 0) {        
         passivityTime = 0;
@@ -238,9 +240,9 @@ function updatePassivityTimer() {
 }
 
 function reset(){
-    totalMinutes = 3;
+    totalMinutes;
     totalTime = totalMinutes*(60 * 1000);
-    passivityTime = 1*60*1000;    
+    passivityTime = 0.1*60*1000;    
     updateTimer();
     updatePassivityTimer();
     enableClicks('start-stop-button', 'priority-btn');
@@ -356,7 +358,7 @@ function updateTotalMinutes(){
         totalMinutes = 1;
         totalTime = totalMinutes*(60 * 1000);  
     } else{
-        totalMinutes = 3;
+        totalMinutes;
         totalTime = totalMinutes*(60 * 1000); 
     }  
 }
