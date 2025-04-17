@@ -17,7 +17,8 @@ let timer = document.getElementById('timer');
 let passTimer = document.getElementById('pass-timer');
 let priorityACheck = document.getElementById('priority-a');
 let priorityBCheck = document.getElementById('priority-b');
-document.getElementById('start-stop-button').addEventListener('click', startStop);
+let startStopBtn = document.getElementById('start-stop-button');
+startStopBtn.addEventListener('click', startStop);
 document.getElementById('reset-btn').addEventListener('click', function(){
     reset();
     resetCards();
@@ -131,11 +132,13 @@ Calculamos el total de milisegundos
  * Cambia los valores del texto del botón START cada vez que se pulsa
  */
 function toggleStartStopButton(){
-    let button = document.getElementById('start-stop-button');
+    
     if (!running){
-        button.textContent = "START";
+        startStopBtn.textContent = "START";
+        startStopBtn.style.height = "15vh";        
     } else{
-        button.textContent = "STOP";
+        startStopBtn.textContent = "STOP";
+        startStopBtn.style.height = "33vh"
     }
 }
 

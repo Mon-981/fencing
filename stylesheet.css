@@ -11,41 +11,28 @@
     font-family: "Special Gothic Condensed One";
     font-weight: 600;
 }
-#content{
-    margin: 10px;
-}
-
-#names-points, #timer, #plus-minus-btns, #pass-timer, #start-stop-button, #reset-priority-table, #cards-tr{
-    
-    width: 100%;    
-}
-#names, #points, #pm-btns, #timer, #pass-timer, #start-stop-button{
-    text-align: center;
-}
-
 #content {
-    margin: 10px;
+    margin-top: 2vh;
 }
 
-#names-points {
-    
+#names-points {    
     width: 100%;
     text-align: center;
-    border-collapse: collapse;
+    border-collapse: collapse;    
 }
 
 #names, #points {
     display: flex;
     justify-content: space-around;
     width: 100%;
-    text-align: center;
+    text-align: center;    
 }
 
 #cards-tr {
     width: 100%;
     height: 4vh;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-around;    
 }
 
 .cards-td {
@@ -55,13 +42,14 @@
 }
 
 .cards-td div {
-    width: 2.5vh; 
-    height: 2.5vh;
+    width: 2.6vh; 
+    height: 2.6vh;
     border-radius: 50px;
     display: none;    
     align-items: center;
     justify-content: center;    
-    font-size: 0.6rem;   
+    font-size: 1rem;  
+    
 }
 .yellow-cards{
     background-color: #ffd700;      
@@ -84,16 +72,10 @@
 #reset-btn, #priority-btn{
     width: 100%;
     height: 8vh;
-    display: flex;
-    
+    display: flex;    
     text-align: center;
     font-size: 1.5rem;
-}
-
-.cards, .cards-btns{
-    height: auto;
-    
-    
+    margin: 1vh;
 }
 
 #yellow-card{    
@@ -114,25 +96,25 @@
 }
 .card-btn{
     width: 100%;
-    height: 8vh;
-    
+    height: 8vh;    
     text-align: center;
     border-radius: 10px;
     margin: 3px;
 }
 
 #names-points{
-    height: 25vh;
+    height: 20vh;
 }
 #plus-minus-btns{
-height: 15vh;
+height: 12vh;
 }
 #timer{
     display: flex;
-    height: 15vh;
-    font-size: 4rem;
+    height: 10vh;
+    font-size: 5rem;
     justify-content: center;
     align-items: center;
+    margin-top: 3vh;  
 }
 #pass-timer{
     display: flex;
@@ -140,35 +122,46 @@ height: 15vh;
     font-size: 1.5rem;
     justify-content: center;
     align-items: center;
+    margin-bottom: 3vh;
 }
 #start-stop-button{
     display: flex;
     height: 15vh;
     font-size: 4rem;
     justify-content: center;
-    align-items: center;
+    align-items: center;  
+    background-color: rgb(70, 70, 70);  
+    margin: 1vh;
+    transition: height 0.2s ease;
 }
 #pa-points, #pb-points{    
-    height: 15vh;
+    height: 17vh;
     align-items: center;
-    font-size: 5rem;
+    font-size: 7rem;
+    margin-bottom: 3vh;
 }
-.p-names{
-    margin: 7px;
-    font-size: 1.8rem;
+.p-names{   
+    font-size: 1.8rem;   
 }
 .add-btns, .decrease-btns{
     width: 21vw;
     height: 10vh;
     border-radius: 15px;
     font-size: 4rem;
-    margin: 1vw;
-    border: 2px solid white; 
+    margin: 0vw 1vw;    
     font-family: "Source Code Pro";
 }
 
 #plus-minus-btns, #pm-btns, .add-btns, .decrease-btns{
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: center;    
+}
+
+.border {
+    border: 4px solid rgb(200, 200, 200);
+    border-radius: 15px;     
+}
+#yellow-pcard-a, #yellow-pcard-b{
+color: black;
 }

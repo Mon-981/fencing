@@ -7,18 +7,17 @@
         <meta name='viewport' content='width=device-width, initial-scale=1'>
         <link rel='stylesheet' href='stylesheet.css'>
         <link rel="manifest" href="site.webmanifest">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&family=Special+Gothic+Condensed+One&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&family=Special+Gothic+Condensed+One&display=swap" rel="stylesheet">
-
         <script>
             if ('serviceWorker' in navigator) {
               navigator.serviceWorker.register('sw.js')
                 .then(reg => console.log('Service Worker registrado:', reg))
                 .catch(err => console.error('Error al registrar el Service Worker:', err));
             }
-          </script>
+        </script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&family=Special+Gothic+Condensed+One&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&family=Special+Gothic+Condensed+One&display=swap" rel="stylesheet">
 
     </head>
     <body>        
@@ -62,19 +61,19 @@
                 </table>
                 <table id='plus-minus-btns'>
                     <tr id='pm-btns'>
-                        <td class='add-btns' id='pa-plus'>+</td>
-                        <td class='decrease-btns' id='pa-minus'>-</td>
-                        <td class='add-btns' id='pb-plus'>+</td>
-                        <td class='decrease-btns' id='pb-minus'>-</td>
+                        <td class='add-btns border'  id='pa-plus'>+</td>
+                        <td class='decrease-btns border' id='pa-minus'>-</td>
+                        <td class='add-btns border' id='pb-plus'>+</td>
+                        <td class='decrease-btns border' id='pb-minus'>-</td>
                     </tr>
                 </table>
                 <div id='timer'>0 : 00</div>
                 <div id='pass-timer'>01 : 00 : 000</div>
-                <div id='start-stop-button'>START</div>
+                <div class="border" id='start-stop-button'>START</div>
                 <div id='to-hide'>
                     <div id='reset-priority-table'>                    
-                        <div id='reset-btn'>RESET</div>                        
-                        <div id='priority-btn'>PRIORITY</div>                       
+                        <div class="border"  id='reset-btn'>RESET</div>                        
+                        <div class="border"  id='priority-btn'>PRIORITY</div>                       
                     </div>
                     <div class='cards-btns'>
                         <div class='card-btn yellow-cards a-cards' ></div>
@@ -85,8 +84,7 @@
                         <div class='card-btn black-cards b-cards'></div>                        
                     </div>
                 </div>
-        </div>
-        
+        </div>        
         <script src='script.js' async defer></script>
     </body>
 </html>
