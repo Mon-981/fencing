@@ -106,19 +106,16 @@
     margin: 3px;
 }
 
-#names-points{
-    height: 20vh;
-}
 #plus-minus-btns{
 height: 12vh;
 }
 #timer{
     display: flex;
-    height: 10vh;
+    height: 12vh;
     font-size: 5rem;
     justify-content: center;
     align-items: center;
-    margin-top: 3vh;  
+    margin-top: 1vh;  
 }
 #pass-timer{
     display: flex;
@@ -139,7 +136,7 @@ height: 12vh;
     transition: height 0.2s ease;
 }
 #pa-points, #pb-points{    
-    height: 17vh;
+    height: 21vh;
     align-items: center;
     font-size: 7rem;
     margin-bottom: 3vh;
