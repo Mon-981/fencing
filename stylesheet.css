@@ -1,23 +1,23 @@
 *{
     margin: 0px;
     padding: 0px;
+    box-sizing: border-box;
+    background-color: grey;
+    color: white;
+    overflow-y: hidden;
+    justify-content: center;
+    align-items: center;
 }
 #content{
     margin: 10px;
 }
 
-#names-points, #plus-minus-btns, #timer, #pass-timer, #start-stop-button, #reset-priority-table, #cards-tr{
+#names-points, #timer, #plus-minus-btns, #pass-timer, #start-stop-button, #reset-priority-table, #cards-tr{
     border: 1px solid red;
     width: 100%;    
 }
 #names, #points, #pm-btns, #timer, #pass-timer, #start-stop-button{
     text-align: center;
-}
-
-* {
-    margin: 0px;
-    padding: 0px;
-    box-sizing: border-box;
 }
 
 #content {
@@ -40,7 +40,7 @@
 
 #cards-tr {
     width: 100%;
-    height: 15px;
+    height: 25px;
     display: flex;
     justify-content: space-around;
 }
@@ -48,12 +48,12 @@
 .cards-td {
     display: flex;
     justify-content: center;
-    gap: 25px; 
+    gap: 10px; 
 }
 
 .cards-td div {
-    width: 12px; 
-    height: 12px;
+    width: 4vw; 
+    height: 4vw;
     border-radius: 50px;
     display: none;    
     align-items: center;
@@ -78,21 +78,16 @@
     display: flex;
     justify-content: center;
 }
-#reset-btn{
+#reset-btn, #priority-btn{
     width: 100%;
-    display: block;
+    height: 8vh;
+    display: flex;
     border: 1px solid red;
     text-align: center;
+    font-size: 1.5rem;
 }
-#priority-btn{
-    width: 100%;
-    display: block;
-    border: 1px solid red;
-    margin: auto;
-    text-align: center;
-}
+
 .cards, .cards-btns{
-    /* display: none; */
     height: auto;
     border: 1px solid red;
     
@@ -116,9 +111,60 @@
 }
 .card-btn{
     width: 100%;
-    height: 40px;
+    height: 8vh;
     border: 1px solid red;
     text-align: center;
     border-radius: 10px;
     margin: 3px;
+}
+
+#names-points{
+    height: 25vh;
+}
+#plus-minus-btns{
+height: 15vh;
+}
+#timer{
+    display: flex;
+    height: 15vh;
+    font-size: 4rem;
+    justify-content: center;
+    align-items: center;
+}
+#pass-timer{
+    display: flex;
+    height: 5vh;
+    font-size: 1.5rem;
+    justify-content: center;
+    align-items: center;
+}
+#start-stop-button{
+    display: flex;
+    height: 15vh;
+    font-size: 4rem;
+    justify-content: center;
+    align-items: center;
+}
+#points{
+    border: 1px solid red;
+    height: 15vh;
+    align-items: center;
+    font-size: 5rem;
+}
+.p-names{
+    margin: 7px;
+}
+.add-btns, .decrease-btns{
+    width: 21vw;
+    height: 10vh;
+    border-radius: 15px;
+    font-size: 4rem;
+    margin: 1vw;
+    border: 2px solid white; 
+}
+
+#plus-minus-btns, #pm-btns, .add-btns, .decrease-btns{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

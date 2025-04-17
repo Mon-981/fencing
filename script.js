@@ -1,7 +1,9 @@
-let A_SCORE = document.getElementById('pa-points');
-let B_SCORE = document.getElementById('pb-points');
+let aScore = document.getElementById('pa-points');
+let bScore = document.getElementById('pb-points');
 let totalMinutes = 3;
 let totalTime; 
+let aPenalties = 0;
+let bPenalties = 0;
 let running = false;
 let lastTime;
 let passivityTime = 0.1*60*1000;
@@ -64,7 +66,7 @@ function changeNames(element){
     let regex = /^[a-zA-Z]+$/
     const id = element.id;
     if (newName!= null && regex.test(newName)){
-        document.getElementById(id).textContent = newName;
+        document.getElementById(id).textContent =  newName.toUpperCase();
     }else{
         alert('Name field can only contain letters');
         let id = element.id;
@@ -82,17 +84,17 @@ function add(btn){
         running = false;
         toggleStartStopButton();
         if (id === 'pa-plus'){
-            A_SCORE.textContent++;
+            aScore.textContent++;
             alert('Player A Wins');         
         } else{
-            B_SCORE.textContent++ ;
+            bScore.textContent++ ;
             alert('Player B Wins');    
         }
     } else {
         if (id === 'pa-plus'){
-            A_SCORE.textContent++ ;         
+            aScore.textContent++ ;         
         } else{
-            B_SCORE.textContent++ ;    
+            bScore.textContent++ ;    
         }
     }
 }
@@ -104,9 +106,9 @@ Previene que el participante obtenga puntos negativos
 function decrease(btn){
     const id = btn.id;
     if(id === 'pa-minus'){               
-        A_SCORE.textContent <= 0 ? A_SCORE = 0 : A_SCORE.textContent--;
+        aScore.textContent <= 0 ? aScore = 0 : aScore.textContent--;
     } else{        
-        B_SCORE.textContent <= 0 ? B_SCORE = 0 : B_SCORE.textContent--;
+        bScore.textContent <= 0 ? bScore = 0 : bScore.textContent--;
     }
 }
 
@@ -170,8 +172,9 @@ function step(currentTime) {
         toggleStartStopButton();
         passivityTime = 0.1*60*1000;        
         alert('Penalty for passivity for both players');
-        changePassivityStatus('playerA', 'playerB')
-        totalTime += 10
+        changePassivityStatus('playerA', 'playerB');
+        totalTime += 10;
+        document.getElementById('to-hide').style.display = 'unset';    
     }
     
     updateTimer();
@@ -231,9 +234,9 @@ function reset(){
     updateTimer();
     updatePassivityTimer();
     enableClicks('start-stop-button', 'priority-btn');
+    aScore.textContent = 0;
+    bScore.textContent = 0;
 }
-
-
 
 function changePassivityStatus(...args){
     for(let id of args){
@@ -363,8 +366,6 @@ document.querySelectorAll('.card-btn').forEach(btn => {
     });
 });
 
-let aPenalties = 0;
-let bPenalties = 0;
 
 function setCards(element){   
     if (element.classList.contains('yellow-cards')){
@@ -422,13 +423,13 @@ function penaltiesToPoints(player){
     switch(player){
         case 'playerA':
             if (aPenalties === 2){
-                B_SCORE.textContent++;
+                bScore.textContent++;
                 aPenalties = 0;
                 document.querySelectorAll('#yellow-card-a, #red-card-a').forEach(card =>{
                     card.style.display = 'none';
                 });
             } else if (aPenalties === 3){
-                B_SCORE.textContent++;
+                bScore.textContent++;
                 aPenalties = 1;
                 document.querySelectorAll('#red-card-a').forEach(card =>{
                     card.style.display = 'none';
@@ -437,13 +438,13 @@ function penaltiesToPoints(player){
             break;
         case 'playerB':
             if (bPenalties === 2){
-                A_SCORE.textContent++;
+                aScore.textContent++;
                 bPenalties = 0;
                 document.querySelectorAll('#yellow-card-b, #red-card-b').forEach(card =>{
                     card.style.display = 'none';
                 });
             } else if (bPenalties === 3){
-                A_SCORE.textContent++;
+                aScore.textContent++;
                 bPenalties = 1;
                 document.querySelectorAll('#red-card-b').forEach(card =>{
                     card.style.display = 'none';
