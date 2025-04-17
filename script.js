@@ -64,7 +64,7 @@ Se solicita un nuevo nombre, debe contener al menos una letra, y no ser nulo
 */
 function changeNames(element){
     let newName = prompt('Your name');
-    let regex = /^[a-zA-Z]+$/
+    let regex = /^[a-zA-Z]+(?: [a-zA-Z]+)?$/
     const id = element.id;
     if (newName!= null && regex.test(newName)){
         document.getElementById(id).textContent =  newName.toUpperCase();
