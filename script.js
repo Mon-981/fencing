@@ -70,7 +70,7 @@ function changeNames(element){
     }else{
         alert('Name field can only contain letters');
         let id = element.id;
-        id === 'pa-name' ? document.getElementById(id).textContent = 'Player A' : document.getElementById(id).textContent = 'Player B';        
+        id === 'pa-name' ? document.getElementById(id).textContent = 'PLAYER A' : document.getElementById(id).textContent = 'PLAYER B';        
     }
 }
 
@@ -85,14 +85,21 @@ function add(btn){
         toggleStartStopButton();
         if (id === 'pa-plus'){
             aScore.textContent++;
-            alert('Player A Wins');         
+            alert('Player A Wins');
+            disableClicks('start-stop-button', 'priority-btn');
+            document.getElementById('to-hide').style.display = 'unset';         
         } else{
             bScore.textContent++ ;
-            alert('Player B Wins');    
+            alert('Player B Wins');
+            disableClicks('start-stop-button', 'priority-btn');
+            document.getElementById('to-hide').style.display = 'unset';    
         }
     } else {
+        passivityTime = 0.1*60*1000;
+        updatePassivityTimer();
         if (id === 'pa-plus'){
-            aScore.textContent++ ;         
+            aScore.textContent++ ; 
+                    
         } else{
             bScore.textContent++ ;    
         }
@@ -233,7 +240,7 @@ function reset(){
     passivityTime = 1*60*1000;    
     updateTimer();
     updatePassivityTimer();
-    // enableClicks('start-stop-button', 'priority-btn');
+    enableClicks('start-stop-button', 'priority-btn');
     aScore.textContent = 0;
     bScore.textContent = 0;
 }
@@ -455,16 +462,16 @@ function penaltiesToPoints(player){
             return;
     }
 }
-// function disableClicks(...args){
-//     args.forEach(arg =>{
-//         document.getElementById(arg).style.pointerEvents = 'none';
-//         document.getElementById(arg).style.color = 'grey';
-//     })
-// }
+function disableClicks(...args){
+    args.forEach(arg =>{
+        document.getElementById(arg).style.pointerEvents = 'none';
+        document.getElementById(arg).style.color = 'grey';
+    })
+}
 
-// function enableClicks(...args){
-//     args.forEach(arg =>{
-//         document.getElementById(arg).style.pointerEvents = 'auto';
-//         document.getElementById(arg).style.color = 'black'; 
-//     })
-// }
+function enableClicks(...args){
+    args.forEach(arg =>{
+        document.getElementById(arg).style.pointerEvents = 'auto';
+        document.getElementById(arg).style.color = 'white'; 
+    })
+}
