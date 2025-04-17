@@ -233,7 +233,7 @@ function reset(){
     passivityTime = 1*60*1000;    
     updateTimer();
     updatePassivityTimer();
-    enableClicks('start-stop-button', 'priority-btn');
+    // enableClicks('start-stop-button', 'priority-btn');
     aScore.textContent = 0;
     bScore.textContent = 0;
 }
@@ -455,16 +455,16 @@ function penaltiesToPoints(player){
             return;
     }
 }
-function disableClicks(...args){
-    args.forEach(arg =>{
-        document.getElementById(arg).style.pointerEvents = 'none';
-        document.getElementById(arg).style.color = 'grey';
-    })
-}
+// function disableClicks(...args){
+//     args.forEach(arg =>{
+//         document.getElementById(arg).style.pointerEvents = 'none';
+//         document.getElementById(arg).style.color = 'grey';
+//     })
+// }
 
-function enableClicks(...args){
-    args.forEach(arg =>{
-        document.getElementById(arg).style.pointerEvents = 'auto';
-        document.getElementById(arg).style.color = 'black'; 
-    })
-}
+// function enableClicks(...args){
+//     args.forEach(arg =>{
+//         document.getElementById(arg).style.pointerEvents = 'auto';
+//         document.getElementById(arg).style.color = 'black'; 
+//     })
+// }
