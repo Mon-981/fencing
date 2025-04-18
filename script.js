@@ -485,45 +485,43 @@ function enableClicks(...args){
 }
 
 /* CONTROL PARA EL MODAL */
-document.addEventListener("DOMContentLoaded", () => {
-    const saveBtn = document.getElementById("save-conf");
-  
-    document.querySelectorAll('.increase').forEach(button => {
-      button.addEventListener('click', function () {
-        const valueEl = this.parentElement.querySelector('.value');
-        let value = parseInt(valueEl.textContent, 10);
-        if (value < 99) valueEl.textContent = value + 1;
-      });
-    });
-  
-    document.querySelectorAll('.decrease').forEach(button => {
-      button.addEventListener('click', function () {
-        const valueEl = this.parentElement.querySelector('.value');
-        let value = parseInt(valueEl.textContent, 10);
-        if (value > 1) valueEl.textContent = value - 1;
-      });
-    });
-  
-    saveBtn.addEventListener("click", () => {
-    //   const values = document.querySelectorAll(".value");
-      roundsVal = document.getElementById("rounds-val").textContent;
-      minutesVal = document.getElementById("minutes-val").textContent;
-      pointsVal = document.getElementById("points-val").textContent;
-    //   [roundsVal, minutesVal, pointsVal] = Array.from(values).map(el => parseInt(el.textContent, 10));
-    
-      localStorage.setItem("config", JSON.stringify({
-        rounds: roundsVal,
-        minutes: minutesVal,
-        points: pointsVal
-      }));
-    
-      document.querySelector(".modal").style.display = "none";
-    
-      iniciarAplicacion(roundsVal, minutesVal, pointsVal);
-    });
-    }) 
-  function iniciarAplicacion(rounds, minutes, points) {
-    console.log(`Iniciando con ${rounds} asaltos de ${minutes} minutos y ${points} puntos`);
-    updateTotalMinutes();
-    updateTimer();
-  }
+const saveBtn = document.getElementById("save-conf");
+
+document.querySelectorAll('.increase').forEach(button => {
+  button.addEventListener('click', function () {
+    const valueEl = this.parentElement.querySelector('.value');
+    let value = parseInt(valueEl.textContent, 10);
+    if (value < 99) valueEl.textContent = value + 1;
+  });
+});
+
+document.querySelectorAll('.decrease').forEach(button => {
+  button.addEventListener('click', function () {
+    const valueEl = this.parentElement.querySelector('.value');
+    let value = parseInt(valueEl.textContent, 10);
+    if (value > 1) valueEl.textContent = value - 1;
+  });
+});
+
+saveBtn.addEventListener("click", () => {
+  roundsVal = parseInt(document.getElementById("rounds-val").textContent, 10);
+  minutesVal = parseInt(document.getElementById("minutes-val").textContent, 10);
+  pointsVal = parseInt(document.getElementById("points-val").textContent, 10);
+
+  localStorage.setItem("config", JSON.stringify({
+    rounds: roundsVal,
+    minutes: minutesVal,
+    points: pointsVal
+  }));
+
+  document.querySelector(".modal").style.display = "none";
+
+  iniciarAplicacion(roundsVal, minutesVal, pointsVal);
+});
+
+function iniciarAplicacion(rounds, minutes, points) {
+  console.log(`Iniciando con ${rounds} asaltos de ${minutes} minutos y ${points} puntos`);
+  updateTotalMinutes(); // Asegúrate de que esta función existe y usa los valores correctamente
+  updateTimer(); // Igual aquí
+}
+
