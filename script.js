@@ -1,7 +1,10 @@
+let roundsVal;
+let minutesVal;
+let pointsVal;
 let aScore = document.getElementById('pa-points');
 let bScore = document.getElementById('pb-points');
-let totalMinutes = 3;
-let totalTime; 
+let totalMinutes = parseInt(minutesVal);
+let totalTime = totalMinutes*60*1000; 
 let aPenalties = 0;
 let bPenalties = 0;
 let running = false;
@@ -240,7 +243,7 @@ function updatePassivityTimer() {
 }
 
 function reset(){
-    totalMinutes;
+    totalMinutes = minutesVal;
     totalTime = totalMinutes*(60 * 1000);
     passivityTime = 0.1*60*1000;    
     updateTimer();
@@ -358,7 +361,7 @@ function updateTotalMinutes(){
         totalMinutes = 1;
         totalTime = totalMinutes*(60 * 1000);  
     } else{
-        totalMinutes;
+        totalMinutes = minutesVal;
         totalTime = totalMinutes*(60 * 1000); 
     }  
 }
@@ -485,41 +488,42 @@ function enableClicks(...args){
 document.addEventListener("DOMContentLoaded", () => {
     const saveBtn = document.getElementById("save-conf");
   
-    const limits = {
-      "rounds-value": { min: 1, max: 3 },
-      "minutes-value": { min: 1, max: 5 }
-    };
-  
-    document.querySelectorAll(".increase, .decrease").forEach(button => {
-      button.addEventListener("click", () => {
-        const targetId = button.dataset.target;
-        const valueEl = document.getElementById(targetId);
+    document.querySelectorAll('.increase').forEach(button => {
+      button.addEventListener('click', function () {
+        const valueEl = this.parentElement.querySelector('.value');
         let value = parseInt(valueEl.textContent, 10);
+        if (value < 99) valueEl.textContent = value + 1;
+      });
+    });
   
-        const { min, max } = limits[targetId];
-  
-        if (button.classList.contains("increase") && value < max) {
-          valueEl.textContent = value + 1;
-        }
-  
-        if (button.classList.contains("decrease") && value > min) {
-          valueEl.textContent = value - 1;
-        }
+    document.querySelectorAll('.decrease').forEach(button => {
+      button.addEventListener('click', function () {
+        const valueEl = this.parentElement.querySelector('.value');
+        let value = parseInt(valueEl.textContent, 10);
+        if (value > 1) valueEl.textContent = value - 1;
       });
     });
   
     saveBtn.addEventListener("click", () => {
-      const rounds = parseInt(document.getElementById("rounds-value").textContent, 10);
-      const minutes = parseInt(document.getElementById("minutes-value").textContent, 10);
-  
-      console.log(`Guardado: ${rounds} asaltos, ${minutes} minutos`);
+    //   const values = document.querySelectorAll(".value");
+      roundsVal = document.getElementById("rounds-val").textContent;
+      minutesVal = document.getElementById("minutes-val").textContent;
+      pointsVal = document.getElementById("points-val").textContent;
+    //   [roundsVal, minutesVal, pointsVal] = Array.from(values).map(el => parseInt(el.textContent, 10));
+    
+      localStorage.setItem("config", JSON.stringify({
+        rounds: roundsVal,
+        minutes: minutesVal,
+        points: pointsVal
+      }));
+    
       document.querySelector(".modal").style.display = "none";
-  
-      iniciarAplicacion(rounds, minutes);
+    
+      iniciarAplicacion(roundsVal, minutesVal, pointsVal);
     });
-  });
-  
-  function iniciarAplicacion(rounds, minutes) {
-    console.log(`Iniciando con ${rounds} asaltos de ${minutes} minutos`);
+    }) 
+  function iniciarAplicacion(rounds, minutes, points) {
+    console.log(`Iniciando con ${rounds} asaltos de ${minutes} minutos y ${points} puntos`);
+    updateTotalMinutes();
+    updateTimer();
   }
-  
