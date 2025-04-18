@@ -3,7 +3,7 @@ let minutesVal;
 let pointsVal;
 let aScore = document.getElementById('pa-points');
 let bScore = document.getElementById('pb-points');
-let totalMinutes = parseInt(minutesVal);
+let totalMinutes = minutesVal;
 let totalTime = totalMinutes*60*1000; 
 let aPenalties = 0;
 let bPenalties = 0;
@@ -102,10 +102,18 @@ function add(btn){
         passivityTime = 0.1*60*1000;
         updatePassivityTimer();
         if (id === 'pa-plus'){
-            aScore.textContent++ ; 
+            aScore.textContent++ ;
+            if(parseInt(aScore.textContent) == pointsVal){
+                alert("Player A Wins");
+                disableClicks('start-stop-button', 'priority-btn');
+            } 
                     
         } else{
-            bScore.textContent++ ;    
+            bScore.textContent++ ;
+            if(parseInt(bScore.textContent) == pointsVal){
+                alert("Player B Wins");
+                disableClicks('start-stop-button', 'priority-btn');
+            }    
         }
     }
 }
