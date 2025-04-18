@@ -20,11 +20,39 @@
         <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&family=Special+Gothic+Condensed+One&display=swap" rel="stylesheet">
 
     </head>
-    <body>        
+    <body>
         <div class= 'cards yellow-cards' id='yellow-card'></div>
         <div class= 'cards red-cards' id='red-card'></div>
         <div class= 'cards black-cards' id='black-card'></div>            
         <div id='main'>
+            <div class="modal">
+                <div class="modal-content">
+                  <h2>CONFIGURATION</h2>
+              
+                  <div class="option-group">
+                    <label>Rounds:</label>
+                    <div class="value-selector">
+                      <button class="decrease" data-target="rounds-value">-</button>
+                      <span id="rounds-value">1</span>
+                      <button class="increase" data-target="rounds-value">+</button>
+                    </div>
+                  </div>
+              
+                  <div class="option-group">
+                    <label>Minutes:</label>
+                    <div class="value-selector">
+                      <button class="decrease" data-target="minutes-value">-</button>
+                      <span id="minutes-value">3</span>
+                      <button class="increase" data-target="minutes-value">+</button>
+                    </div>
+                  </div>
+              
+                  <button id="save-conf">SAVE</button>
+                </div>
+              </div>
+              
+              
+              
             <div id='top'>    </div>
             <div id='content'>
                 <table id='names-points'>

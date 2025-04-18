@@ -1,3 +1,12 @@
+@media screen and (orientation: landscape) {
+    body {
+      transform: rotate(-90deg);
+      transform-origin: left top;
+      width: 100vh;
+      height: 100vw;
+      overflow: hidden;
+    }
+  }
 *{
     margin: 0px;
     padding: 0px;
@@ -156,9 +165,12 @@ height: 12vh;
 #plus-minus-btns, #pm-btns, .add-btns, .decrease-btns{
     display: flex;
     align-items: center;
-    justify-content: center;    
+    justify-content: center;
+    transition: transform 0.1s ease;    
 }
-
+.add-btns:active, .decrease-btns:active, #reset-btn:active, #priority-btn:active {
+    transform: scale(0.95);
+}
 .border {
     border: 4px solid rgb(200, 200, 200);
     border-radius: 15px;     
@@ -166,3 +178,79 @@ height: 12vh;
 #yellow-pcard-a, #yellow-pcard-b{
 color: black;
 }
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+  }
+  
+  .modal-content {    
+    padding: 2rem;
+    border-radius: 1.5rem;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  }
+  
+  h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .option-group {
+    margin-bottom: 2rem;
+  }
+  
+  label {
+    display: block;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .value-selector {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  
+  .value-selector button {
+    font-size: 2rem;
+    padding: 0.5rem 1.2rem;
+    border: 4px solid rgb(200, 200, 200);
+    border-radius: 15px;    
+    color: white;    
+    cursor: pointer;
+    transition: transform 0.1s ease;
+    font-size: 3rem;
+  }
+  
+  .value-selector button:active {
+    transform: scale(0.95);
+  }
+  
+  .value-selector span {
+    font-size: 2.5rem;
+    min-width: 2rem;
+    display: inline-block;
+  }
+  
+  #save-conf {
+    margin-top: 1rem;
+    font-size: 1.5rem;
+    padding: 0.8rem 2rem;
+    border: 4px solid rgb(200, 200, 200);
+    border-radius: 15px;    
+    color: white;
+    border-radius: 0.5rem;
+    cursor: pointer;
+  }
+  

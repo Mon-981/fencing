@@ -480,3 +480,46 @@ function enableClicks(...args){
         document.getElementById(arg).style.color = 'white'; 
     })
 }
+
+/* CONTROL PARA EL MODAL */
+document.addEventListener("DOMContentLoaded", () => {
+    const saveBtn = document.getElementById("save-conf");
+  
+    const limits = {
+      "rounds-value": { min: 1, max: 3 },
+      "minutes-value": { min: 1, max: 5 }
+    };
+  
+    document.querySelectorAll(".increase, .decrease").forEach(button => {
+      button.addEventListener("click", () => {
+        const targetId = button.dataset.target;
+        const valueEl = document.getElementById(targetId);
+        let value = parseInt(valueEl.textContent, 10);
+  
+        const { min, max } = limits[targetId];
+  
+        if (button.classList.contains("increase") && value < max) {
+          valueEl.textContent = value + 1;
+        }
+  
+        if (button.classList.contains("decrease") && value > min) {
+          valueEl.textContent = value - 1;
+        }
+      });
+    });
+  
+    saveBtn.addEventListener("click", () => {
+      const rounds = parseInt(document.getElementById("rounds-value").textContent, 10);
+      const minutes = parseInt(document.getElementById("minutes-value").textContent, 10);
+  
+      console.log(`Guardado: ${rounds} asaltos, ${minutes} minutos`);
+      document.querySelector(".modal").style.display = "none";
+  
+      iniciarAplicacion(rounds, minutes);
+    });
+  });
+  
+  function iniciarAplicacion(rounds, minutes) {
+    console.log(`Iniciando con ${rounds} asaltos de ${minutes} minutos`);
+  }
+  
