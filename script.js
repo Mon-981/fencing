@@ -9,13 +9,16 @@ let aPenalties = 0;
 let bPenalties = 0;
 let running = false;
 let lastTime;
-let passivityTime = 0.1*60*1000;
+let passivityTime = 2*60*1000;
 let passivityLastTime;
 let passivityStatusA = 0;
 let passivityStatusB = 0;
 let issetPriority = false;
 let priorityA = false;
 let priorityB = false;
+let aWins = false;
+let bWins = false;
+let finished = false;
 let timer = document.getElementById('timer');
 let passTimer = document.getElementById('pass-timer');
 let priorityACheck = document.getElementById('priority-a');
@@ -99,7 +102,7 @@ function add(btn){
             document.getElementById('to-hide').style.display = 'unset';    
         }
     } else {
-        passivityTime = 0.1*60*1000;
+        passivityTime = 2*60*1000;
         updatePassivityTimer();
         if (id === 'pa-plus'){
             aScore.textContent++ ;
@@ -185,15 +188,15 @@ function step(currentTime) {
         totalTime = 0;
         running = false;
         toggleStartStopButton();
-        alert("Time is up!");
-        return;
+        roundsVal--
+        isFinished();
     }    
     
     if (passivityTime <= 0) {        
         passivityTime = 0;
         running = false;
         toggleStartStopButton();
-        passivityTime = 0.1*60*1000;        
+        passivityTime = 2*60*1000;        
         alert('Penalty for passivity for both players');
         changePassivityStatus('playerA', 'playerB');
         totalTime += 10;
@@ -253,10 +256,11 @@ function updatePassivityTimer() {
 function reset(){
     totalMinutes = minutesVal;
     totalTime = totalMinutes*(60 * 1000);
-    passivityTime = 0.1*60*1000;    
+    passivityTime = 2*60*1000;    
     updateTimer();
     updatePassivityTimer();
     enableClicks('start-stop-button', 'priority-btn');
+    timer.style.color = "white";
     aScore.textContent = 0;
     bScore.textContent = 0;
 }
@@ -533,3 +537,54 @@ function iniciarAplicacion(rounds, minutes, points) {
   updateTimer(); // Igual aquí
 }
 
+function checkWinner(){
+    if(aScore.textContent > bScore.textContent) {
+        aWins = true
+    }else if (aScore.textContent < bScore.textContent){
+        bWins = true
+    } else {
+        aWins = false;
+        bWins = false;
+    }
+}
+
+function isFinished(){
+    if(roundsVal<=0){
+        disableClicks('start-stop-button', 'priority-btn');
+        document.getElementById('to-hide').style.display = 'unset';
+        checkWinner();
+        if(aWins){
+            alert("Time is up! Player A wins!");
+            finished = true;
+            return;
+        } else if (bWins){
+            alert("Time is up! Player B wins!");
+            finished = true;
+            return;
+        }else{
+            alert("Tie!");            
+            enableClicks('start-stop-button', 'priority-btn');
+            if(issetPriority & priorityA){
+                alert ("Player A Wins!");
+                disableClicks('start-stop-button', 'priority-btn');
+            } else if ( issetPriority & priorityB){
+                alert ("Player B Wins!");
+                disableClicks('start-stop-button', 'priority-btn');
+            }else{
+                setPriority();
+                totalMinutes = minutesVal;
+                passivityTime = 2*60*1000;
+                updatePassivityTimer();
+                updateTimer();
+                updateTotalMinutes();      
+            }
+        }
+    }else{        
+        totalMinutes = minutesVal;
+        passivityTime = 2*60*1000;
+        updatePassivityTimer();
+        updateTimer();
+        updateTotalMinutes();     
+    }
+}
+// Evitar que el tiempo siga corriendo una vez se da un ganador, evitar tarjetas
