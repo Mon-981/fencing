@@ -24,6 +24,10 @@ let passTimer = document.getElementById('pass-timer');
 let priorityACheck = document.getElementById('priority-a');
 let priorityBCheck = document.getElementById('priority-b');
 let startStopBtn = document.getElementById('start-stop-button');
+let playerAButton = document.getElementById('player-a');
+let playerBButton = document.getElementById('player-b');
+let playerSelectionModal = document.getElementById('player-selector');
+playerSelectionModal.style.display='none';
 startStopBtn.addEventListener('click', startStop);
 document.getElementById('reset-btn').addEventListener('click', function(){
     reset();
@@ -593,4 +597,4 @@ function isFinished(){
 function resetPassivityTime(){
     passivityTime = 2*60*1000;
 }
-// Evitar que el tiempo siga corriendo una vez se da un ganador, evitar tarjetas
+
