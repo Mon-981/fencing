@@ -102,7 +102,7 @@ function add(btn){
             document.getElementById('to-hide').style.display = 'unset';    
         }
     } else {
-        passivityTime = 2*60*1000;
+        resetPassivityTime();
         updatePassivityTimer();
         if (id === 'pa-plus'){
             aScore.textContent++ ;
@@ -196,7 +196,7 @@ function step(currentTime) {
         passivityTime = 0;
         running = false;
         toggleStartStopButton();
-        passivityTime = 2*60*1000;        
+        resetPassivityTime();        
         alert('Penalty for passivity for both players');
         changePassivityStatus('playerA', 'playerB');
         totalTime += 10;
@@ -256,7 +256,7 @@ function updatePassivityTimer() {
 function reset(){
     totalMinutes = minutesVal;
     totalTime = totalMinutes*(60 * 1000);
-    passivityTime = 2*60*1000;    
+    resetPassivityTime();
     updateTimer();
     updatePassivityTimer();
     enableClicks('start-stop-button', 'priority-btn');
@@ -556,24 +556,26 @@ function isFinished(){
         if(aWins){
             alert("Time is up! Player A wins!");
             finished = true;
-            return;
+            resetPassivityTime()
         } else if (bWins){
             alert("Time is up! Player B wins!");
             finished = true;
-            return;
+            resetPassivityTime()
         }else{
             alert("Tie!");            
             enableClicks('start-stop-button', 'priority-btn');
             if(issetPriority & priorityA){
                 alert ("Player A Wins!");
+                resetPassivityTime()
                 disableClicks('start-stop-button', 'priority-btn');
             } else if ( issetPriority & priorityB){
                 alert ("Player B Wins!");
+                resetPassivityTime()
                 disableClicks('start-stop-button', 'priority-btn');
             }else{
                 setPriority();
                 totalMinutes = minutesVal;
-                passivityTime = 2*60*1000;
+                resetPassivityTime()
                 updatePassivityTimer();
                 updateTimer();
                 updateTotalMinutes();      
@@ -581,10 +583,14 @@ function isFinished(){
         }
     }else{        
         totalMinutes = minutesVal;
-        passivityTime = 2*60*1000;
+        resetPassivityTime()
         updatePassivityTimer();
         updateTimer();
         updateTotalMinutes();     
     }
+}
+
+function resetPassivityTime(){
+    passivityTime = 2*60*1000;
 }
 // Evitar que el tiempo siga corriendo una vez se da un ganador, evitar tarjetas
