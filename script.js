@@ -19,15 +19,43 @@ let priorityB = false;
 let aWins = false;
 let bWins = false;
 let finished = false;
+let selectedButton = null;
+let selectedCard = null;
+let redCardsCount = 0;
 let timer = document.getElementById('timer');
 let passTimer = document.getElementById('pass-timer');
 let priorityACheck = document.getElementById('priority-a');
 let priorityBCheck = document.getElementById('priority-b');
 let startStopBtn = document.getElementById('start-stop-button');
-let playerAButton = document.getElementById('player-a');
-let playerBButton = document.getElementById('player-b');
 let playerSelectionModal = document.getElementById('player-selector');
+let confirmPenaltyButton = document.getElementById('confirm-penalty');
+let cancelPenaltybutton = document.getElementById('cancel-penalty');
 playerSelectionModal.style.display='none';
+cancelPenaltybutton.addEventListener('click', ()=>{
+    playerSelectionModal.style.display='none';
+})
+confirmPenaltyButton.addEventListener('click', setPenalty);
+
+document.querySelectorAll('.player-buttons').forEach(button => {
+    button.addEventListener('click', () => {        
+        if (selectedButton === button) {
+            button.classList.remove('selected');
+            selectedButton = null;
+        } else {            
+            if (selectedButton) {
+                selectedButton.classList.remove('selected');
+            }
+            button.classList.add('selected');
+            selectedButton = button;
+        }
+    });
+});
+document.querySelectorAll('.card-btn').forEach(button => {
+    button.addEventListener('click', () => {        
+            selectedCard = button;
+            playerSelectionModal.style.display='flex';    
+    })
+});
 startStopBtn.addEventListener('click', startStop);
 document.getElementById('reset-btn').addEventListener('click', function(){
     reset();
@@ -37,7 +65,9 @@ document.getElementById('priority-btn').addEventListener('click', function(){
     checkPriority();
     // setPriority();
 });
-
+document.getElementById('modal-conf').addEventListener('click', ()=>{
+    document.querySelector(".modal").style.display = "flex";
+})
 /*
 Selecciona todos los elementos de la clase add-btns y le añade el addEventListener 
 con la funcion add, pasándole la información del botón que la ejecutó
@@ -391,65 +421,65 @@ function resetCards(){
     passivityStatusA = 0;
     passivityStatusB = 0;
 }
-document.querySelectorAll('.card-btn').forEach(btn => {
-    btn.addEventListener('click', function(){
-        setCards(this);
-    });
-});
+// document.querySelectorAll('.card-btn').forEach(btn => {
+//     btn.addEventListener('click', function(){
+//         setPenalty(this);
+//     });
+// });
 
 
-function setCards(element){   
-    if (element.classList.contains('yellow-cards')){
-        document.getElementById('yellow-card').style.display = 'flex';
-        document.getElementById('yellow-card').addEventListener('click', function(){
-            toggleDisplay(this);
-        });
-        if (element.classList.contains('a-cards')){
-           document.getElementById('yellow-card-a').style.display = 'flex'; 
-           aPenalties++;
-           penaltiesToPoints('playerA'); 
-        } else if (element.classList.contains('b-cards')){
-            document.getElementById('yellow-card-b').style.display = 'flex';
-            bPenalties++;
-            penaltiesToPoints('playerB'); 
-        } else {
-            return;
-        }
-    } else if (element.classList.contains('red-cards')){
-        document.getElementById('red-card').style.display = 'flex';
-        document.getElementById('red-card').addEventListener('click', function(){
-            toggleDisplay(this);            
-        });
-        if (element.classList.contains('a-cards')){
-            document.getElementById('red-card-a').style.display = 'flex';
-            aPenalties+= 2;
-            penaltiesToPoints('playerA'); 
-         } else if (element.classList.contains('b-cards')){
-             document.getElementById('red-card-b').style.display = 'flex';
-             bPenalties+= 2;
-             penaltiesToPoints('playerB'); 
-         } else {
-             return;
-         }            
-    } else if (element.classList.contains('black-cards')){
-        document.getElementById('black-card').style.display = 'flex';
-        document.getElementById('black-card').addEventListener('click', function(){
-            toggleDisplay(this);
-        });
-        if (element.classList.contains('a-cards')){
-            document.getElementById('black-pcard-a').style.display = 'flex';
-            alert('Player A disqualified, Player B wins') 
-         } else if (element.classList.contains('b-cards')){
-             document.getElementById('black-pcard-b').style.display = 'flex';
-             alert('Player B disqualified, Player A wins');
-             disableClicks('start-stop-button', 'priority-btn');
-         } else {
-             return;
-         }                        
-    } else{
-        return;
-    }     
-}
+// function setCards(element){   
+//     if (element.classList.contains('yellow-cards')){
+//         document.getElementById('yellow-card').style.display = 'flex';
+//         document.getElementById('yellow-card').addEventListener('click', function(){
+//             toggleDisplay(this);
+//         });
+//         if (element.classList.contains('a-cards')){
+//            document.getElementById('yellow-card-a').style.display = 'flex'; 
+//            aPenalties++;
+//            penaltiesToPoints('playerA'); 
+//         } else if (element.classList.contains('b-cards')){
+//             document.getElementById('yellow-card-b').style.display = 'flex';
+//             bPenalties++;
+//             penaltiesToPoints('playerB'); 
+//         } else {
+//             return;
+//         }
+//     } else if (element.classList.contains('red-cards')){
+//         document.getElementById('red-card').style.display = 'flex';
+//         document.getElementById('red-card').addEventListener('click', function(){
+//             toggleDisplay(this);            
+//         });
+//         if (element.classList.contains('a-cards')){
+//             document.getElementById('red-card-a').style.display = 'flex';
+//             aPenalties+= 2;
+//             penaltiesToPoints('playerA'); 
+//          } else if (element.classList.contains('b-cards')){
+//              document.getElementById('red-card-b').style.display = 'flex';
+//              bPenalties+= 2;
+//              penaltiesToPoints('playerB'); 
+//          } else {
+//              return;
+//          }            
+//     } else if (element.classList.contains('black-cards')){
+//         document.getElementById('black-card').style.display = 'flex';
+//         document.getElementById('black-card').addEventListener('click', function(){
+//             toggleDisplay(this);
+//         });
+//         if (element.classList.contains('a-cards')){
+//             document.getElementById('black-pcard-a').style.display = 'flex';
+//             alert('Player A disqualified, Player B wins') 
+//          } else if (element.classList.contains('b-cards')){
+//              document.getElementById('black-pcard-b').style.display = 'flex';
+//              alert('Player B disqualified, Player A wins');
+//              disableClicks('start-stop-button', 'priority-btn');
+//          } else {
+//              return;
+//          }                        
+//     } else{
+//         return;
+//     }     
+// }
 function penaltiesToPoints(player){
     switch(player){
         case 'playerA':
@@ -598,3 +628,69 @@ function resetPassivityTime(){
     passivityTime = 2*60*1000;
 }
 
+function setPenalty(){       
+    if (selectedCard.classList.contains('yellow-cards')){
+        playerSelectionModal.style.display='none';
+                document.getElementById('yellow-card').style.display = 'flex';
+                document.getElementById('yellow-card').addEventListener('click', function(){
+                    toggleDisplay(this);
+                });
+                if (selectedButton.id === 'player-a'){
+                   document.getElementById('yellow-card-a').style.display = 'flex'; 
+                   aPenalties++;
+                   penaltiesToPoints('playerA'); 
+                   resetSelectedPlayer();
+                } else if (selectedButton.id === 'player-b'){
+                    document.getElementById('yellow-card-b').style.display = 'flex';
+                    bPenalties++;
+                    penaltiesToPoints('playerB'); 
+                    resetSelectedPlayer()
+                } else {
+                    return;
+                }
+    }else if (selectedCard.classList.contains('red-cards')){
+        playerSelectionModal.style.display='none';
+        document.getElementById('red-card').style.display = 'flex';
+        document.getElementById('red-card').addEventListener('click', function(){
+        toggleDisplay(this);            
+    });
+        if (selectedButton.id === 'player-a'){
+            document.getElementById('red-card-a').style.display = 'flex';
+            aPenalties+= 2;
+            penaltiesToPoints('playerA');
+            resetSelectedPlayer() 
+        }else if (selectedButton.id === 'player-b'){
+            document.getElementById('red-card-b').style.display = 'flex';
+            bPenalties+= 2;
+            penaltiesToPoints('playerB');
+            resetSelectedPlayer() 
+        }else{
+            return;
+                 }            
+    }else if(selectedCard.classList.contains('black-cards')){
+        playerSelectionModal.style.display='none';
+        document.getElementById('black-card').style.display = 'flex';
+        document.getElementById('black-card').addEventListener('click', function(){
+        toggleDisplay(this);
+    });
+        if (selectedButton.id === 'player-a'){
+            document.getElementById('black-pcard-a').style.display = 'flex';
+            resetSelectedPlayer()
+            alert('Player A disqualified, Player B wins') 
+        }else if(selectedButton.id === 'player-b'){
+            document.getElementById('black-pcard-b').style.display = 'flex';
+            resetSelectedPlayer()
+            alert('Player B disqualified, Player A wins');
+            disableClicks('start-stop-button', 'priority-btn');
+        }else{
+            return;
+        }                        
+    }else{
+        return;
+    }     
+}
+
+function resetSelectedPlayer(){
+    selectedButton.classList.remove('selected');
+    selectedButton = null;
+}
