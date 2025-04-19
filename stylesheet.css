@@ -193,11 +193,11 @@ color: black;
   
   h2 {
     font-size: 2.5rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
   }
   
   .option-group {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
   }
   
   label {
@@ -244,4 +244,4 @@ color: black;
     border-radius: 0.5rem;
     cursor: pointer;
   }
-  
+ 
