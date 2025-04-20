@@ -9,7 +9,7 @@ let aPenalties = 0;
 let bPenalties = 0;
 let running = false;
 let lastTime;
-let passivityTime = 2*60*1000;
+let passivityTime = 1*60*1000;
 let passivityLastTime;
 let passivityStatusA = 0;
 let passivityStatusB = 0;
@@ -127,12 +127,12 @@ function add(btn){
         if (id === 'pa-plus'){
             aScore.textContent++;
             alert('Player A Wins');
-            disableClicks('start-stop-button', 'priority-btn');
+            disableClicks('start-stop-button', 'priority-btn', 'yellow-penalty', 'red-penalty','black-penalty');
             document.getElementById('to-hide').style.display = 'unset';         
         } else{
             bScore.textContent++ ;
             alert('Player B Wins');
-            disableClicks('start-stop-button', 'priority-btn');
+            disableClicks('start-stop-button', 'priority-btn', 'yellow-penalty', 'red-penalty','black-penalty');
             document.getElementById('to-hide').style.display = 'unset';    
         }
     } else {
@@ -142,14 +142,14 @@ function add(btn){
             aScore.textContent++ ;
             if(parseInt(aScore.textContent) == pointsVal){
                 alert("Player A Wins");
-                disableClicks('start-stop-button', 'priority-btn');
+                disableClicks('start-stop-button', 'priority-btn', 'yellow-penalty', 'red-penalty','black-penalty');
             } 
                     
         } else{
             bScore.textContent++ ;
             if(parseInt(bScore.textContent) == pointsVal){
                 alert("Player B Wins");
-                disableClicks('start-stop-button', 'priority-btn');
+                disableClicks('start-stop-button', 'priority-btn', 'yellow-penalty', 'red-penalty','black-penalty');
             }    
         }
     }
@@ -293,7 +293,7 @@ function reset(){
     resetPassivityTime();
     updateTimer();
     updatePassivityTimer();
-    enableClicks('start-stop-button', 'priority-btn');
+    enableClicks('start-stop-button', 'priority-btn', 'yellow-penalty', 'red-penalty','black-penalty');
     timer.style.color = "white";
     aScore.textContent = 0;
     bScore.textContent = 0;
@@ -519,7 +519,8 @@ function penaltiesToPoints(player){
 function disableClicks(...args){
     args.forEach(arg =>{
         document.getElementById(arg).style.pointerEvents = 'none';
-        document.getElementById(arg).style.color = 'grey';
+        // document.getElementById(arg).style.color = 'grey';
+        document.getElementById(arg).style.opacity = '40%';
     })
 }
 
@@ -527,6 +528,7 @@ function enableClicks(...args){
     args.forEach(arg =>{
         document.getElementById(arg).style.pointerEvents = 'auto';
         document.getElementById(arg).style.color = 'white'; 
+        document.getElementById(arg).style.opacity = '100%';
     })
 }
 
@@ -584,7 +586,7 @@ function checkWinner(){
 
 function isFinished(){
     if(roundsVal<=0){
-        disableClicks('start-stop-button', 'priority-btn');
+        disableClicks('start-stop-button', 'priority-btn', 'yellow-penalty', 'red-penalty','black-penalty');
         document.getElementById('to-hide').style.display = 'unset';
         checkWinner();
         if(aWins){
@@ -595,17 +597,15 @@ function isFinished(){
             alert("Time is up! Player B wins!");
             finished = true;
             resetPassivityTime()
-        }else{
-            alert("Tie!");            
-            enableClicks('start-stop-button', 'priority-btn');
+    }else{
+        alert("Tie!");            
+        disableClicks('start-stop-button', 'priority-btn', 'yellow-penalty', 'red-penalty','black-penalty');
             if(issetPriority & priorityA){
                 alert ("Player A Wins!");
-                resetPassivityTime()
-                disableClicks('start-stop-button', 'priority-btn');
+                resetPassivityTime()                
             } else if ( issetPriority & priorityB){
                 alert ("Player B Wins!");
-                resetPassivityTime()
-                disableClicks('start-stop-button', 'priority-btn');
+                resetPassivityTime()                
             }else{
                 setPriority();
                 totalMinutes = minutesVal;
@@ -625,7 +625,7 @@ function isFinished(){
 }
 
 function resetPassivityTime(){
-    passivityTime = 2*60*1000;
+    passivityTime = 1*60*1000;
 }
 
 function setPenalty(){       
@@ -672,6 +672,7 @@ function setPenalty(){
         document.getElementById('black-card').style.display = 'flex';
         document.getElementById('black-card').addEventListener('click', function(){
         toggleDisplay(this);
+        disableClicks('start-stop-button', 'priority-btn', 'yellow-penalty', 'red-penalty','black-penalty');
     });
         if (selectedButton.id === 'player-a'){
             document.getElementById('black-pcard-a').style.display = 'flex';
@@ -680,8 +681,7 @@ function setPenalty(){
         }else if(selectedButton.id === 'player-b'){
             document.getElementById('black-pcard-b').style.display = 'flex';
             resetSelectedPlayer()
-            alert('Player B disqualified, Player A wins');
-            disableClicks('start-stop-button', 'priority-btn');
+            alert('Player B disqualified, Player A wins');            
         }else{
             return;
         }                        
@@ -694,3 +694,5 @@ function resetSelectedPlayer(){
     selectedButton.classList.remove('selected');
     selectedButton = null;
 }
+
+//REVISAR penaltiesToPoints Y HACER VISIBLES LAS ROJAS CON CONTADOR
