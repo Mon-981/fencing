@@ -257,15 +257,15 @@ color: black;
     color: white;    
     cursor: pointer;
     transition: transform 0.1s ease;
-    font-size: 2rem;
-    Width: 40%;
+    font-size: 1.5rem;
+    Width: 45%;
     margin: 7vw 1vw;
   }
 
 .player-selector-content{     
     padding: 2rem;
     border-radius: 1.5rem;
-    width: 90%;
+    width: 100%;
     max-width: 400px;
     text-align: center;
     box-shadow: 0 0 15px rgba(0,0,0,0.2);
