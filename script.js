@@ -127,12 +127,12 @@ function add(btn){
         if (id === 'pa-plus'){
             aScore.textContent++;
             alert('Player A Wins');
-            disableClicks('start-stop-button', 'priority-btn', 'yellow-penalty', 'red-penalty','black-penalty');
+            disableClicks('start-stop-button', 'priority-btn', 'yellow-penalty', 'red-penalty','black-penalty','pa-plus','pb-plus','pa-minus','pb-minus');
             document.getElementById('to-hide').style.display = 'unset';         
         } else{
             bScore.textContent++ ;
             alert('Player B Wins');
-            disableClicks('start-stop-button', 'priority-btn', 'yellow-penalty', 'red-penalty','black-penalty');
+            disableClicks('start-stop-button', 'priority-btn', 'yellow-penalty', 'red-penalty','black-penalty','pa-plus','pb-plus','pa-minus','pb-minus');
             document.getElementById('to-hide').style.display = 'unset';    
         }
     } else {
@@ -142,14 +142,14 @@ function add(btn){
             aScore.textContent++ ;
             if(parseInt(aScore.textContent) == pointsVal){
                 alert("Player A Wins");
-                disableClicks('start-stop-button', 'priority-btn', 'yellow-penalty', 'red-penalty','black-penalty');
+                disableClicks('start-stop-button', 'priority-btn', 'yellow-penalty', 'red-penalty','black-penalty','pa-plus','pb-plus','pa-minus','pb-minus');
             } 
                     
         } else{
             bScore.textContent++ ;
             if(parseInt(bScore.textContent) == pointsVal){
                 alert("Player B Wins");
-                disableClicks('start-stop-button', 'priority-btn', 'yellow-penalty', 'red-penalty','black-penalty');
+                disableClicks('start-stop-button', 'priority-btn', 'yellow-penalty', 'red-penalty','black-penalty','pa-plus','pb-plus','pa-minus','pb-minus');
             }    
         }
     }
@@ -293,7 +293,7 @@ function reset(){
     resetPassivityTime();
     updateTimer();
     updatePassivityTimer();
-    enableClicks('start-stop-button', 'priority-btn', 'yellow-penalty', 'red-penalty','black-penalty');
+    enableClicks('start-stop-button', 'priority-btn', 'yellow-penalty', 'red-penalty','black-penalty','pa-plus','pb-plus','pa-minus','pb-minus');
     timer.style.color = "white";
     aScore.textContent = 0;
     bScore.textContent = 0;
@@ -421,65 +421,7 @@ function resetCards(){
     passivityStatusA = 0;
     passivityStatusB = 0;
 }
-// document.querySelectorAll('.card-btn').forEach(btn => {
-//     btn.addEventListener('click', function(){
-//         setPenalty(this);
-//     });
-// });
 
-
-// function setCards(element){   
-//     if (element.classList.contains('yellow-cards')){
-//         document.getElementById('yellow-card').style.display = 'flex';
-//         document.getElementById('yellow-card').addEventListener('click', function(){
-//             toggleDisplay(this);
-//         });
-//         if (element.classList.contains('a-cards')){
-//            document.getElementById('yellow-card-a').style.display = 'flex'; 
-//            aPenalties++;
-//            penaltiesToPoints('playerA'); 
-//         } else if (element.classList.contains('b-cards')){
-//             document.getElementById('yellow-card-b').style.display = 'flex';
-//             bPenalties++;
-//             penaltiesToPoints('playerB'); 
-//         } else {
-//             return;
-//         }
-//     } else if (element.classList.contains('red-cards')){
-//         document.getElementById('red-card').style.display = 'flex';
-//         document.getElementById('red-card').addEventListener('click', function(){
-//             toggleDisplay(this);            
-//         });
-//         if (element.classList.contains('a-cards')){
-//             document.getElementById('red-card-a').style.display = 'flex';
-//             aPenalties+= 2;
-//             penaltiesToPoints('playerA'); 
-//          } else if (element.classList.contains('b-cards')){
-//              document.getElementById('red-card-b').style.display = 'flex';
-//              bPenalties+= 2;
-//              penaltiesToPoints('playerB'); 
-//          } else {
-//              return;
-//          }            
-//     } else if (element.classList.contains('black-cards')){
-//         document.getElementById('black-card').style.display = 'flex';
-//         document.getElementById('black-card').addEventListener('click', function(){
-//             toggleDisplay(this);
-//         });
-//         if (element.classList.contains('a-cards')){
-//             document.getElementById('black-pcard-a').style.display = 'flex';
-//             alert('Player A disqualified, Player B wins') 
-//          } else if (element.classList.contains('b-cards')){
-//              document.getElementById('black-pcard-b').style.display = 'flex';
-//              alert('Player B disqualified, Player A wins');
-//              disableClicks('start-stop-button', 'priority-btn');
-//          } else {
-//              return;
-//          }                        
-//     } else{
-//         return;
-//     }     
-// }
 function penaltiesToPoints(player){
     switch(player){
         case 'playerA':
@@ -586,7 +528,7 @@ function checkWinner(){
 
 function isFinished(){
     if(roundsVal<=0){
-        disableClicks('start-stop-button', 'priority-btn', 'yellow-penalty', 'red-penalty','black-penalty');
+        disableClicks('start-stop-button', 'priority-btn', 'yellow-penalty', 'red-penalty','black-penalty','pa-plus','pb-plus','pa-minus','pb-minus');
         document.getElementById('to-hide').style.display = 'unset';
         checkWinner();
         if(aWins){
@@ -599,7 +541,7 @@ function isFinished(){
             resetPassivityTime()
     }else{
         alert("Tie!");            
-        disableClicks('start-stop-button', 'priority-btn', 'yellow-penalty', 'red-penalty','black-penalty');
+        disableClicks('start-stop-button', 'priority-btn', 'yellow-penalty', 'red-penalty','black-penalty','pa-plus','pb-plus','pa-minus','pb-minus');
             if(issetPriority & priorityA){
                 alert ("Player A Wins!");
                 resetPassivityTime()                
