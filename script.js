@@ -104,8 +104,8 @@ Se solicita un nuevo nombre, debe contener al menos una letra, y no ser nulo
 ( esto sucede al presionar cancel en el prompt)
  Si no se cumplen estas condiciones los nombres quedan por defecto
 */
-function changeNames(element) {
-    let newName = prompt('Your name');
+async function changeNames(element) {
+    let newName = await customPrompt('Your name');
     let regex = /^[a-zA-Z]+(?: [a-zA-Z]+)?$/;
     const id = element.id;
 
@@ -120,7 +120,7 @@ function changeNames(element) {
         }
 
     } else {
-        alert('Name field can only contain letters');
+        await customAlert('Name field can only contain letters');
 
         if (id === 'pa-name') {
             document.getElementById(id).textContent = 'PLAYER A';
@@ -136,19 +136,19 @@ function changeNames(element) {
 /*
  Función para sumar puntos
  */
-function add(btn){
+async function add(btn){
     const id = btn.id;
     if(issetPriority){
         running = false;
         toggleStartStopButton();
         if (id === 'pa-plus'){
             aScore.textContent++;
-            alert('Player A Wins');
+            await customAlert('Player A Wins');
             disableClicks('start-stop-button', 'priority-btn', 'yellow-penalty', 'red-penalty','black-penalty','pa-plus','pb-plus','pa-minus','pb-minus');
             document.getElementById('to-hide').style.display = 'unset';         
         } else{
             bScore.textContent++ ;
-            alert('Player B Wins');
+            await customAlert('Player B Wins');
             disableClicks('start-stop-button', 'priority-btn', 'yellow-penalty', 'red-penalty','black-penalty','pa-plus','pb-plus','pa-minus','pb-minus');
             document.getElementById('to-hide').style.display = 'unset';    
         }
@@ -158,14 +158,14 @@ function add(btn){
         if (id === 'pa-plus'){
             aScore.textContent++ ;
             if(parseInt(aScore.textContent) == pointsVal){
-                alert("Player A Wins");
+                await customAlert('Player A Wins');
                 disableClicks('start-stop-button', 'priority-btn', 'yellow-penalty', 'red-penalty','black-penalty','pa-plus','pb-plus','pa-minus','pb-minus');
             } 
                     
         } else{
             bScore.textContent++ ;
             if(parseInt(bScore.textContent) == pointsVal){
-                alert("Player B Wins");
+                await customAlert('Player B Wins');
                 disableClicks('start-stop-button', 'priority-btn', 'yellow-penalty', 'red-penalty','black-penalty','pa-plus','pb-plus','pa-minus','pb-minus');
             }    
         }
@@ -217,7 +217,7 @@ Una tasa demasiado elevada para un cronómetro de precisión, por ello se calcul
  Finalmente ejecutamos la función step de forma recursiva con requestAnimationFrame(step) hasta que el cronometro llega a 0
  en ese momento la función deja de ejecutarse
 */
-function step(currentTime) {
+async function step(currentTime) {
     if(!totalMinutes){
         updateTotalMinutes();
     }
@@ -248,7 +248,7 @@ function step(currentTime) {
         running = false;
         toggleStartStopButton();
         resetPassivityTime();        
-        alert('Penalty for passivity for both players');
+        await customAlert('Penalty for passivity for both players');
         changePassivityStatus('playerA', 'playerB');
         totalTime += 10;
         document.getElementById('to-hide').style.display = 'unset';    
@@ -316,7 +316,7 @@ function reset(){
     bScore.textContent = 0;
 }
 
-function changePassivityStatus(...args){
+async function changePassivityStatus(...args){
     for(let id of args){
         if (id === 'playerA'){
             passivityStatusA++;            
@@ -324,7 +324,7 @@ function changePassivityStatus(...args){
             if (passivityStatusA === 2){ 
                 bScore.textContent++;
             } else if(passivityStatusA === 3){
-                alert('Jugador A descalificado');
+                await customAlert('Jugador A descalificado');
                 
             }    
         }else if (id === 'playerB') {
@@ -333,7 +333,7 @@ function changePassivityStatus(...args){
             if (passivityStatusB === 2){ 
                 aScore.textContent++;
             } else if(passivityStatusB === 3){
-                alert('Jugador B descalificado');                
+                await customAlert('Jugador B descalificado');                
             }  
         } else {
             console.log('Jugador no reconocido');
@@ -341,7 +341,7 @@ function changePassivityStatus(...args){
     }
 }
 
-//REFACTORIZAR
+
 
 function setPassivityCards(id){
     let key= '';
@@ -543,27 +543,27 @@ function checkWinner(){
     }
 }
 
-function isFinished(){
+async function isFinished(){
     if(roundsVal<=0){
         disableClicks('start-stop-button', 'priority-btn', 'yellow-penalty', 'red-penalty','black-penalty','pa-plus','pb-plus','pa-minus','pb-minus');
         document.getElementById('to-hide').style.display = 'unset';
         checkWinner();
         if(aWins){
-            alert("Time is up! Player A wins!");
+            await customAlert(`Time is up! ${playerA} wins!`);
             finished = true;
             resetPassivityTime()
         } else if (bWins){
-            alert("Time is up! Player B wins!");
+            await customAlert(`Time is up! ${PlayerB} wins!`);
             finished = true;
             resetPassivityTime()
     }else{
-        alert("Tie!");            
+        await customAlert("Tie!");            
         disableClicks('start-stop-button', 'priority-btn', 'yellow-penalty', 'red-penalty','black-penalty','pa-plus','pb-plus','pa-minus','pb-minus');
             if(issetPriority & priorityA){
-                alert ("Player A Wins!");
+                await customAlert(`Time is up! ${PlayerA} wins!`);
                 resetPassivityTime()                
             } else if ( issetPriority & priorityB){
-                alert ("Player B Wins!");
+                await customAlert(`Time is up! ${PlayerB} wins!`);
                 resetPassivityTime()                
             }else{
                 setPriority();
@@ -587,7 +587,7 @@ function resetPassivityTime(){
     passivityTime = 1*60*1000;
 }
 
-function setPenalty(){       
+async function setPenalty(){       
     if (selectedCard.classList.contains('yellow-cards')){
         playerSelectionModal.style.display='none';
                 document.getElementById('yellow-card').style.display = 'flex';
@@ -636,11 +636,11 @@ function setPenalty(){
         if (selectedButton.id === 'player-a'){
             document.getElementById('black-pcard-a').style.display = 'flex';
             resetSelectedPlayer()
-            alert('Player A disqualified, Player B wins') 
+            await customAlert(`${PlayerA} disqualified, ${PlayerB} wins`); 
         }else if(selectedButton.id === 'player-b'){
             document.getElementById('black-pcard-b').style.display = 'flex';
             resetSelectedPlayer()
-            alert('Player B disqualified, Player A wins');            
+            await customAlert(`${PlayerB} disqualified, ${PlayerA} wins`);            
         }else{
             return;
         }                        
@@ -656,36 +656,45 @@ function resetSelectedPlayer(){
 
 //REVISAR penaltiesToPoints Y HACER VISIBLES LAS ROJAS CON CONTADOR
 
+// CUSTOM ALERT
+function customAlert(message) {
+    return new Promise(resolve => {
+        const alertModal = document.getElementById("custom-alert");
+        document.getElementById("alert-message").textContent = message;
+        alertModal.style.display = "flex";
 
-function guardarAsalto(playerA, playerB, puntosA, puntosB, ganador) {
-    const data = {
-        playerA: playerA,
-        playerB: playerB,
-        puntosA: puntosA,
-        puntosB: puntosB,
-        ganador: ganador
-    };
+        const okBtn = document.getElementById("alert-ok");
+        okBtn.onclick = () => {
+            alertModal.style.display = "none";
+            resolve();
+        };
+    });
+}
 
-    fetch('http://localhost:8000/DWES/Fencing/save_asalto.php', { 
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data) 
-    })
-    .then(response => response.json()) 
-    .then(data => {
-        if (data.status === 'success') {
-            alert('Asalto guardado correctamente');
-        } else {
-            alert('Error al guardar el asalto: ' + data.message);
-        }
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-        alert('Error de conexión');
+// CUSTOM PROMPT
+function customPrompt(message) {
+    return new Promise(resolve => {
+        const promptModal = document.getElementById("custom-prompt");
+        const input = document.getElementById("prompt-input");
+        document.getElementById("prompt-message").textContent = message;
+        input.value = '';
+        promptModal.style.display = "flex";
+
+        const okBtn = document.getElementById("prompt-ok");
+        const cancelBtn = document.getElementById("prompt-cancel");
+
+        okBtn.onclick = () => {
+            promptModal.style.display = "none";
+            resolve(input.value || null);
+        };
+
+        cancelBtn.onclick = () => {
+            promptModal.style.display = "none";
+            resolve(null);
+        };
     });
 }
 
 
-guardarAsalto('Player A', 'Player B', 5, 3, 'Player A');
+
+
