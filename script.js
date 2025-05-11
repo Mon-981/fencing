@@ -1,3 +1,5 @@
+let playerA = 'PLAYER A';
+let playerB = 'PLAYER B';
 let roundsVal;
 let minutesVal;
 let pointsVal;
@@ -102,16 +104,31 @@ Se solicita un nuevo nombre, debe contener al menos una letra, y no ser nulo
 ( esto sucede al presionar cancel en el prompt)
  Si no se cumplen estas condiciones los nombres quedan por defecto
 */
-function changeNames(element){
+function changeNames(element) {
     let newName = prompt('Your name');
-    let regex = /^[a-zA-Z]+(?: [a-zA-Z]+)?$/
+    let regex = /^[a-zA-Z]+(?: [a-zA-Z]+)?$/;
     const id = element.id;
-    if (newName!= null && regex.test(newName)){
-        document.getElementById(id).textContent =  newName.toUpperCase();
-    }else{
+
+    if (newName != null && regex.test(newName)) {
+        newName = newName.toUpperCase();
+        document.getElementById(id).textContent = newName;
+
+        if (id === 'pa-name') {
+            playerA = newName;
+        } else if (id === 'pb-name') {
+            playerB = newName;
+        }
+
+    } else {
         alert('Name field can only contain letters');
-        let id = element.id;
-        id === 'pa-name' ? document.getElementById(id).textContent = 'PLAYER A' : document.getElementById(id).textContent = 'PLAYER B';        
+
+        if (id === 'pa-name') {
+            document.getElementById(id).textContent = 'PLAYER A';
+            playerA = 'PLAYER A';
+        } else if (id === 'pb-name') {
+            document.getElementById(id).textContent = 'PLAYER B';
+            playerB = 'PLAYER B';
+        }
     }
 }
 
@@ -638,3 +655,37 @@ function resetSelectedPlayer(){
 }
 
 //REVISAR penaltiesToPoints Y HACER VISIBLES LAS ROJAS CON CONTADOR
+
+
+function guardarAsalto(playerA, playerB, puntosA, puntosB, ganador) {
+    const data = {
+        playerA: playerA,
+        playerB: playerB,
+        puntosA: puntosA,
+        puntosB: puntosB,
+        ganador: ganador
+    };
+
+    fetch('http://localhost:8000/DWES/Fencing/save_asalto.php', { 
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data) 
+    })
+    .then(response => response.json()) 
+    .then(data => {
+        if (data.status === 'success') {
+            alert('Asalto guardado correctamente');
+        } else {
+            alert('Error al guardar el asalto: ' + data.message);
+        }
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+        alert('Error de conexión');
+    });
+}
+
+
+guardarAsalto('Player A', 'Player B', 5, 3, 'Player A');
