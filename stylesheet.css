@@ -294,6 +294,23 @@ color: black;
     color:  rgb(200, 200, 200);
     transition: transform 0.1s ease;    
 }
-#modal-conf:active{
-    scale: 0.95;
+
+input{
+    border: 3px solid  rgb(200, 200, 200);
+    border-radius: 5px;
+    width: 90%;
+    height: 5vh;
+    margin-bottom: 2vh;
+    padding-left: 4%;
+    font-size: 1.7rem; 
+    outline: none;
+}
+
+#prompt-ok, #prompt-cancel, #alert-ok{
+    border: 3px solid  rgb(200, 200, 200);
+    border-radius: 5px;
+    width: 40%;
+    height: 6vh; 
+    font-size: 2rem; 
+    margin: 2%;  
 }

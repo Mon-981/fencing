@@ -695,6 +695,37 @@ function customPrompt(message) {
     });
 }
 
+async function guardarAsalto(playerA, playerB, puntosA, puntosB, ganador) {
+    const data = {
+        playerA: playerA,
+        playerB: playerB,
+        puntosA: puntosA,
+        puntosB: puntosB,
+        ganador: ganador
+    };
+
+    try {
+        const response = await fetch('http://localhost:8000/DWES/Fencing/save_asalto.php', { 
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data) 
+        });
+
+        const result = await response.json();
+
+        if (result.status === 'success') {
+            await customAlert('Asalto guardado correctamente');
+        } else {
+            await customAlert('Error al guardar el asalto: ' + result.message);
+        }
+
+    } catch (error) {
+        console.error('Error:', error);
+        await customAlert('Error de conexión');
+    }
+}
 
 
 
